@@ -1,0 +1,7 @@
+import java.util.Random;
+import java.util.Scanner;
+public class A1Q4{
+  private static String[] computerDeck, deck;
+  private static Random generator = new Random();
+  private static Scanner = new Scanner(System.in);
+}
