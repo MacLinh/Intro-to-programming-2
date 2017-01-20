@@ -1,7 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Collections;
+
 public class A1Q4{
   private static String[] computerDeck, playerDeck, deck;
   private static Random generator = new Random();
@@ -37,7 +36,7 @@ public class A1Q4{
   }*/
   
   private static int removePairs(String[] deckOfCards, int currentSize){
-    Arrays.sort(deckOfCards);
+    ArrayStringsTools.sortArray(deckOfCards,currentSize);
     
     int i = 0;
     while(i < currentSize-1){
