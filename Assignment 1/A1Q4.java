@@ -1,0 +1,60 @@
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Collections;
+public class A1Q4{
+  private static String[] computerDeck, playerDeck, deck;
+  private static Random generator = new Random();
+  private static Scanner sc = new Scanner(System.in);
+  
+  /*
+   * The reason why these are here is because unlike python the elements are not actualy removed but just replaced with
+   * null. Therefore we cannot use the array size as the tester for who wins
+   * */
+  private static int sizeComputerDeck, sizeplayerDeck, sizeDeck;
+  //constants
+  private static final char[] SUITS = {'\u2660', '\u2661', '\u2662', '\u2663'};
+  private static final String[] RANKS = {"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
+  
+  private static void makeDeck(){
+    deck = new String[SUITS.length*RANKS.length-1];
+    int i = 0;
+    for (String rank : RANKS){
+      for(char suit : SUITS){
+        if(!(rank.equals("Q") && suit=='\u2663'))
+          deck[i++]= rank+suit;
+      }
+    }
+    //ArrayStringsTools.printArray(deck,51);
+    ArrayStringsTools.shuffleArray(deck,51);
+  }
+  /*
+  private static void printDeck(String[] deckOfCards){
+    for (String card : deckOfCards){
+      System.out.print(card+" ");
+    }
+    ArrayStringsTools.printArray(deckOfCards);
+  }*/
+  
+  private static int removePairs(String[] deckOfCards, int currentSize){
+    Arrays.sort(deckOfCards);
+    
+    int i = 0;
+    while(i < currentSize-1){
+      if(deckOfCards[i].charAt(0) == deckOfCards[i+1].charAt(0)){
+        currentSize = ArrayStringsTools.removeItemByIndex(deckOfCards,currentSize,i);
+        currentSize = ArrayStringsTools.removeItemByIndex(deckOfCards,currentSize,i);
+      }
+      else i++;
+    }
+    return currentSize;
+  }
+  public static void main(String [] args){
+    makeDeck();
+    sizeDeck = removePairs(deck,51);
+    //It will print one queen since a queen was removed before 
+    //the rest of the deck should be removed since they have pairs
+    // this was done to test the remove pairs
+    ArrayStringsTools.printArray(deck,sizeDeck);
+  }
+}
