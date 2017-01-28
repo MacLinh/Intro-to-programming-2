@@ -92,10 +92,10 @@ public class A1Q4{
    *  into playerDeck and computerDeck, starting with playerDeck
    */
   private static void dealCards(){
-    playerDeck = new String[26];
+    playerDeck = new String[26];// human gets an extra card cus gets card first
     computerDeck = new String[25]; 
-    while(sizeDeck > 0) {
-      if (sizeDeck > 0){
+    while(sizeDeck > 0) {// deal until out of cards
+      if (sizeDeck > 0){// adds a card if one is still in deck
         String card = deck[0];
         sizePlayerDeck = ArrayStringsTools.appendItem(playerDeck,sizePlayerDeck,card);
         sizeDeck = ArrayStringsTools.removeItemByIndex(deck,sizeDeck,0);
@@ -119,11 +119,11 @@ public class A1Q4{
    *   @return the number of cards in deckOfCards once the pair are removed
    */
   private static int removePairs(String[] deckOfCards, int currentSize){
-    ArrayStringsTools.sortArray(deckOfCards,currentSize);
+    ArrayStringsTools.sortArray(deckOfCards,currentSize);// sorts for easier comparison (more efficient)
     
     int i = 0;
     while(i < currentSize-1){
-      if(deckOfCards[i].charAt(0) == deckOfCards[i+1].charAt(0)){
+      if(deckOfCards[i].charAt(0) == deckOfCards[i+1].charAt(0)){//removes same index because the array will be shifted down as removed
         currentSize = ArrayStringsTools.removeItemByIndex(deckOfCards,currentSize,i);
         currentSize = ArrayStringsTools.removeItemByIndex(deckOfCards,currentSize,i);
       }
@@ -145,7 +145,7 @@ public class A1Q4{
     System.out.println("Give me an integer between 1 and "+sizeComputerDeck+": ");
     try{
       input = Integer.parseInt(sc.nextLine());
-    }catch(NumberFormatException e){
+    }catch(NumberFormatException e){// I know error handling so why not?
       System.err.println("Enter an integer");
       return getValidInput();
     }
@@ -153,7 +153,7 @@ public class A1Q4{
       System.err.println("Enter an integer between 1 and "+sizeComputerDeck);
       return getValidInput();
     }
-    else 
+    else // if its valid return it
       return input;
   }
   
@@ -166,6 +166,7 @@ public class A1Q4{
     int choice = getValidInput();
     String card = computerDeck[choice-1];
     sizeComputerDeck = ArrayStringsTools.removeItemByIndex(computerDeck,sizeComputerDeck,choice-1);
+    
     //handled the four endings of ordinals in english
     int ord_index;
     if (choice>3)
@@ -198,7 +199,7 @@ public class A1Q4{
     sizeComputerDeck = ArrayStringsTools.appendItem(computerDeck,sizeComputerDeck,card);
     sizeComputerDeck = removePairs(computerDeck,sizeComputerDeck);
     
-    int ord_index;
+    int ord_index; // this starts at 2 instead of 3 cus robot picks at 0
     if (choice>2)
       ord_index=2;
     else
@@ -227,11 +228,11 @@ public class A1Q4{
     sizePlayerDeck = removePairs(playerDeck,sizePlayerDeck);
     sizeComputerDeck = removePairs(computerDeck,sizeComputerDeck);
     
-    boolean turn = true;
+    boolean turn = true; // determines whose turn
     while((sizeComputerDeck != 0) && (sizePlayerDeck != 0)){
       if(turn) {// player turn
         playerTurn();
-        turn = false;
+        turn = false;// other player's turn
       }
       else{//computer turn
         computerTurn();
