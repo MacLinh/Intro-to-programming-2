@@ -150,7 +150,7 @@ public class A1Q4{
       System.err.println("Enter an integer");
       return getValidInput();
     }
-    if (!((0<input) && ( input < sizeComputerDeck)) && (input != 1)){
+    if (!((0<input) && ( input <= sizeComputerDeck))){
       System.err.println("Enter an integer between 1 and "+sizeComputerDeck);
       return getValidInput();
     }
