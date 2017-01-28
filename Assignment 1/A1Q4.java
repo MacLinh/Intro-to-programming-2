@@ -157,7 +157,58 @@ public class A1Q4{
       return input;
   }
   
-  
+  private static void playerTurn(){
+    System.out.println("***********************************************************");
+    System.out.println("Your turn.");
+    System.out.println("\nYour current deck of cards is:");
+    ArrayStringsTools.printArray(playerDeck,sizePlayerDeck);
+    
+    int choice = getValidInput();
+    String card = computerDeck[choice-1];
+    sizeComputerDeck = ArrayStringsTools.removeItemByIndex(computerDeck,sizeComputerDeck,choice-1);
+    //handled the four endings of ordinals in english
+    int ord_index;
+    if (choice>3)
+      ord_index=3;
+    else
+      ord_index=choice-1;
+    
+    System.out.println("You asked for my "+choice+ENDINGS[ord_index]+" card.");
+    
+    System.out.println("Here it is. It is "+card);
+    
+    sizePlayerDeck = ArrayStringsTools.appendItem(playerDeck,sizePlayerDeck,card);
+    System.out.println("\nWith "+card+ " added, your current deck of cards is:");
+    ArrayStringsTools.printArray(playerDeck,sizePlayerDeck);
+    
+    System.out.println("And after discarding pairs and shuffling, your deck is:");
+    sizePlayerDeck = removePairs(playerDeck,sizePlayerDeck);
+    ArrayStringsTools.printArray(playerDeck,sizePlayerDeck);
+    
+    waitForUserInput();
+    
+  }
+  private static void computerTurn(){
+    System.out.println("***********************************************************");
+    System.out.println("My turn.\n");
+    int choice =generator.nextInt(sizePlayerDeck);
+    String card =playerDeck[choice];
+    
+    sizePlayerDeck = ArrayStringsTools.removeItemByIndex(playerDeck,sizePlayerDeck,choice);
+    sizeComputerDeck = ArrayStringsTools.appendItem(computerDeck,sizeComputerDeck,card);
+    sizeComputerDeck = removePairs(computerDeck,sizeComputerDeck);
+    
+    int ord_index;
+    if (choice>2)
+      ord_index=2;
+    else
+      ord_index=choice;
+    
+    System.out.println("I took your "+(choice+1)+ENDINGS[ord_index]+" card.");
+    
+    waitForUserInput();
+    
+  }
   /**
    *  The actual game, as per the Python implementation
    */
@@ -179,56 +230,12 @@ public class A1Q4{
     boolean turn = true;
     while((sizeComputerDeck != 0) && (sizePlayerDeck != 0)){
       if(turn) {// player turn
-        System.out.println("***********************************************************");
-        System.out.println("Your turn.");
-        System.out.println("\nYour current deck of cards is:");
-        ArrayStringsTools.printArray(playerDeck,sizePlayerDeck);
-        
-        int choice = getValidInput();
-        String card = computerDeck[choice-1];
-        sizeComputerDeck = ArrayStringsTools.removeItemByIndex(computerDeck,sizeComputerDeck,choice-1);
-        //handled the four endings of ordinals in english
-        int ord_index;
-        if (choice>3)
-          ord_index=3;
-        else
-          ord_index=choice-1;
-        
-        System.out.println("You asked for my "+choice+ENDINGS[ord_index]+" card.");
-        
-        System.out.println("Here it is. It is "+card);
-        
-        sizePlayerDeck = ArrayStringsTools.appendItem(playerDeck,sizePlayerDeck,card);
-        System.out.println("\nWith "+card+ " added, your current deck of cards is:");
-        ArrayStringsTools.printArray(playerDeck,sizePlayerDeck);
-        
-        System.out.println("And after discarding pairs and shuffling, your deck is:");
-        sizePlayerDeck = removePairs(playerDeck,sizePlayerDeck);
-        ArrayStringsTools.printArray(playerDeck,sizePlayerDeck);
-        
-        waitForUserInput();
-        turn=false;
+        playerTurn();
+        turn = false;
       }
       else{//computer turn
-        System.out.println("***********************************************************");
-        System.out.println("My turn.\n");
-        int choice =generator.nextInt(sizePlayerDeck);
-        String card =playerDeck[choice];
-        
-        sizePlayerDeck = ArrayStringsTools.removeItemByIndex(playerDeck,sizePlayerDeck,choice);
-        sizeComputerDeck = ArrayStringsTools.appendItem(computerDeck,sizeComputerDeck,card);
-        sizeComputerDeck = removePairs(computerDeck,sizeComputerDeck);
-        
-        int ord_index;
-        if (choice>2)
-          ord_index=2;
-        else
-          ord_index=choice;
-        
-        System.out.println("I took your "+(choice+1)+ENDINGS[ord_index]+" card.");
-        
-        waitForUserInput();
-        turn=true;
+        computerTurn();
+        turn = true;
       }
     }
     
