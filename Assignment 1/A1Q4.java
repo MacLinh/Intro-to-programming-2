@@ -129,6 +129,7 @@ public class A1Q4{
       }
       else i++;
     }
+    ArrayStringsTools.shuffleArray(deckOfCards,currentSize);
     return currentSize;
   }
   
