@@ -146,7 +146,7 @@ public class A1Q4{
     System.out.println("Give me an integer between 1 and "+sizeComputerDeck+": ");
     try{
       input = Integer.parseInt(sc.nextLine());
-    }catch(NumberFormatException e){// I know error handling so why not?
+    }catch(NumberFormatException e){// Error handling
       System.err.println("Enter an integer");
       return getValidInput();
     }
@@ -200,7 +200,7 @@ public class A1Q4{
     sizeComputerDeck = ArrayStringsTools.appendItem(computerDeck,sizeComputerDeck,card);
     sizeComputerDeck = removePairs(computerDeck,sizeComputerDeck);
     
-    int ord_index; // this starts at 2 instead of 3 cus robot picks at 0
+    int ord_index; // this starts at 2 instead of 3 because robot picks at 0
     if (choice>2)
       ord_index=2;
     else
@@ -262,6 +262,8 @@ public class A1Q4{
   
   public static void main(String[] args){
     
+    StudentInfo.display();
+
     A1Q4 game = new A1Q4();  
     
     game.playGame();
@@ -269,4 +271,3 @@ public class A1Q4{
     
   }
 }
-

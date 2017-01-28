@@ -7,6 +7,7 @@ public class A1Q2{
     return false;
   }
   public static void main(String [] args){
+    StudentInfo.display();
     int[] elems = A1Q1.convert(args);
     System.out.println(hasTwoLengthRun(elems));
   }
