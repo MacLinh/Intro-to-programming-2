@@ -7,6 +7,7 @@ public class A1Q1{
     }
     return count;
   }
+  //I made this method to convert String[] args to int[] for Q1 Q2 abd Q3
   public static int[] convert(String [] sList){
     int[] elems = new int[sList.length];
     for (int i = 0; i < sList.length; i++){

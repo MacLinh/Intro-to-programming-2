@@ -7,11 +7,12 @@ public class A1Q1{
     }
     return count;
   }
-  private static int[] convert(String [] sList){
-    int elems = new int[sList.length];
+  public static int[] convert(String [] sList){
+    int[] elems = new int[sList.length];
     for (int i = 0; i < sList.length; i++){
       elems[i] = Integer.parseInt(sList[i]);
     }
+    return elems;
   }
   public static void main(String [] args){
     int[] elems = convert(args);
