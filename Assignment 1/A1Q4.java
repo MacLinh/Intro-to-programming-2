@@ -241,7 +241,7 @@ public class A1Q4{
       }
     }
     
-    if (sizePlayerDeck == 0){
+    if (sizeComputerDeck == 0){
       System.out.println("Ups. I do not have any more cards");
       System.out.println("You lost! I, Robot, win");
     }
