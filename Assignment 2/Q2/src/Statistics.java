@@ -118,9 +118,9 @@ public class Statistics {
     min = max = dataSet[0];
     for (int i = 0; i < index; i++){
       int data = dataSet[i];
-      if (dataSet[i] > max)
+      if (data > max)
         max = data;
-      else if (dataSet[i] < min)// else if cus this is mutually exclusive to save time
+      else if (data < min)// else if cus this is mutually exclusive to save time
         min = data;
       else
         continue;

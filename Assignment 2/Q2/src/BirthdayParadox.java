@@ -101,6 +101,7 @@ public class BirthdayParadox {
      range = 365;
      runs = 50; 
    }
+   ITI1121Chart s = new ITI1121Chart();
    System.out.println("Q2");
    System.out.println("We have run "+ runs + " experiments");
    System.out.println(runExperiments(range,runs));
