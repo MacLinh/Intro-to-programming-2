@@ -15,6 +15,7 @@ public class A1Q3{
     return record;
   }
   public static void main(String [] args){
+    StudentInfo.display();
     int[] elems = A1Q1.convert(args);
     System.out.println(getLongestRun(elems));
   }
