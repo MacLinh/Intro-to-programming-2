@@ -60,7 +60,7 @@ public class BirthdayParadox {
         }while(!contains(drawn,i-1,draw));//keep drawing until draw a value already drawn
         return i; 
     }
-    
+
     /**
      * I will implement my own search algorithm because im not sure if allowed to use libraries
      * returns true if and only if the value is contained in the array
@@ -114,9 +114,10 @@ public class BirthdayParadox {
             Statistics stats = runExperiments(i*start,runs);
             chart.addDataPoint(i*start,stats.average(),stats.standardDeviation());
         }
-        chart.addPolynome(0.5);
-        chart.addPolynome(0.3333);
-        chart.addPolynome(0.75);
+
+        chart.addPolynome(0.525);
+        chart.addPolynome(0.48);
+        chart.addPolynome(0.57);
         chart.render();
     }
     
