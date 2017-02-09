@@ -34,7 +34,7 @@ public class BirthdayParadox {
         }
         return stats;
         
-    }
+    }//////////////test///////
     
     /** 
      * Runs a single experiment.
