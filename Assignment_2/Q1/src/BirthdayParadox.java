@@ -47,7 +47,7 @@ public class BirthdayParadox {
      */
     
     private static int oneRun(int range){
-        int[] drawn = new int[range+1];//statistically there is 100% probability at one more than range so this is max amount
+        /*int[] drawn = new int[range+1];//statistically there is 100% probability at one more than range so this is max amount
         int i = 0, draw;
         //this is not redundant, there needs to be at least 2 elemnts for a repeat so this will save one cycle of contains()
         //saves one whole cycle for every experiment run!
@@ -57,7 +57,25 @@ public class BirthdayParadox {
             draw = generator.nextInt(range)+1;
             drawn[i++] = draw; 
         }while(!contains(drawn,i-1,draw));//keep drawing until draw a value already drawn
-        return i; 
+        return i; */
+        int[] drawn = new int[range+1];
+        int count = 2, draw;
+        boolean active = true;
+        
+        draw = generator.nextInt(range)+1;
+        drawn[draw-1] = draw;
+        
+        while (active){
+            draw = generator.nextInt(range)+1;
+            
+            if(drawn[draw-1] == draw)
+                return count;
+            else{
+                drawn[draw-1] = draw;
+                count++;
+            }
+        }
+        return -1;
     }
     
     /**
