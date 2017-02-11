@@ -51,15 +51,17 @@ public class BirthdayParadox {
         int count = 2, draw; //count starts at 2 cus minimum for a repeat, draw: the current draw
         boolean active = true;
         
-        draw = generator.nextInt(range);// random number in range [0,range] (Jan 1 = 0)
-        drawn[draw] = draw; // [0] = 0 [1] = 1 ect... a drawn value will have same as its index, not drawn is null
+        //I shifted all the indexes down one because I can't use 0 as unique number due to 0 being default value in arrays
+        
+        draw = generator.nextInt(range)+1;// random number in range [1,range] (Jan 1 = 1)
+        drawn[draw-1] = draw; // [0] = 1, [1] = 2, [k] = k+1 ect... not drawn = 0 
         
         while (active){
-            draw = generator.nextInt(range);
+            draw = generator.nextInt(range)+1;
             
-            if(drawn[draw] == draw) // basically if not null its a repeated draw
+            if(drawn[draw-1] == draw) // basically if not 0 its a repeated draw
                 return count;
-            drawn[draw] = draw; // if the number is new add it to the list
+            drawn[draw-1] = draw; // if the number is new add it to the list
             count++;
         }
         return -1; // shouldnt happen 
