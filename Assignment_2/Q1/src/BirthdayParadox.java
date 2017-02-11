@@ -47,58 +47,25 @@ public class BirthdayParadox {
      */
     
     private static int oneRun(int range){
-        /*int[] drawn = new int[range+1];//statistically there is 100% probability at one more than range so this is max amount
-        int i = 0, draw;
-        //this is not redundant, there needs to be at least 2 elemnts for a repeat so this will save one cycle of contains()
-        //saves one whole cycle for every experiment run!
-        draw = generator.nextInt(range)+1;// generates a random number between 1 and range inclusive [1,range]
-        drawn[i++] = draw;//adds to list of already drawn values
-        do{
-            draw = generator.nextInt(range)+1;
-            drawn[i++] = draw; 
-        }while(!contains(drawn,i-1,draw));//keep drawing until draw a value already drawn
-        return i; */
-        int[] drawn = new int[range+1];
-        int count = 2, draw;
+        int[] drawn = new int[range+1];//at range +1 trials the probability is 100% 
+        int count = 2, draw; //count starts at 2 cus minimum for a repeat, draw: the current draw
         boolean active = true;
         
-        draw = generator.nextInt(range)+1;
-        drawn[draw-1] = draw;
+        draw = generator.nextInt(range);// random number in range [0,range] (Jan 1 = 0)
+        drawn[draw] = draw; // [0] = 0 [1] = 1 ect... a drawn value will have same as its index, not drawn is null
         
         while (active){
-            draw = generator.nextInt(range)+1;
+            draw = generator.nextInt(range);
             
-            if(drawn[draw-1] == draw)
+            if(drawn[draw] == draw) // basically if not null its a repeated draw
                 return count;
-            else{
-                drawn[draw-1] = draw;
-                count++;
-            }
+            drawn[draw] = draw; // if the number is new add it to the list
+            count++;
         }
-        return -1;
+        return -1; // shouldnt happen 
     }
     
-    /**
-     * I will implement my own search algorithm because im not sure if allowed to use libraries
-     * returns true if and only if the value is contained in the array
-     * 
-     * linear search will be fastest since sorting then using binary search is slower
-     * extra condition is I will assume the array should not be fully initialized because it is very rare that we must
-     * get to 366 days for a common birthday...
-     * 
-     * @param arr the array to be scanned
-     * @param maxIndex the max index that this will scan to
-     * @param elem the value searching for
-     */
     
-    /*
-    private static boolean contains(int[] arr, int maxIndex, int elem){
-        for (int i = 0; i < maxIndex; i++){
-            if (arr[i] == elem)
-                return true;
-        }
-        return false;
-    }*/
     
     /** 
      * Main method. The default size of the set is 365, and
