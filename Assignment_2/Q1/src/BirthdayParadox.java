@@ -90,13 +90,15 @@ public class BirthdayParadox {
      * @param maxIndex the max index that this will scan to
      * @param elem the value searching for
      */
+    
+    /*
     private static boolean contains(int[] arr, int maxIndex, int elem){
         for (int i = 0; i < maxIndex; i++){
             if (arr[i] == elem)
                 return true;
         }
         return false;
-    }
+    }*/
     
     /** 
      * Main method. The default size of the set is 365, and
