@@ -48,24 +48,20 @@ public class BirthdayParadox {
      */
     
     private static int oneRun(int range){
-        int[] drawn = new int[range+1];//at range +1 trials the probability is 100% 
+        boolean[] set = new boolean[range+1];//at range +1 trials the probability is 100% 
         int count = 2, draw; //count starts at 2 cus minimum for a repeat, draw: the current draw
-        boolean active = true;
         
-        //I shifted all the indexes down one because I can't use 0 as unique number due to 0 being default value in arrays
+        draw = generator.nextInt(range);// random number in range [0,range) (Jan 1 = 0)
+        set[draw] = true; //flags the value as already draw (false index is one that hasn't been drawn)
         
-        draw = generator.nextInt(range)+1;// random number in range [1,range] (Jan 1 = 1)
-        drawn[draw-1] = draw; // [0] = 1, [1] = 2, [k] = k+1 ect... not drawn = 0 
-        
-        while (active){
-            draw = generator.nextInt(range)+1;
+        while (true){
+            draw = generator.nextInt(range);
             
-            if(drawn[draw-1] == draw) // basically if not 0 its a repeated draw
+            if(set[draw]) // if index was flagged its a repeat
                 return count;
-            drawn[draw-1] = draw; // if the number is new add it to the list
+            set[draw] = true; // flags the index
             count++;
         }
-        return -1; // shouldnt happen 
     }
 
     
@@ -86,7 +82,7 @@ public class BirthdayParadox {
             try{
                 start = Integer.parseInt(args[0]);
                 max = Integer.parseInt(args[1]);
-                runs = Integer.parseInt(args[1]);
+                runs = Integer.parseInt(args[2]);
             }catch(NumberFormatException e){//if typo just go default
                 start = 100;
                 max = 10000;
