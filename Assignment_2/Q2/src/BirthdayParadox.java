@@ -48,8 +48,8 @@ public class BirthdayParadox {
      */
     
     private static int oneRun(int range){
-        boolean[] set = new boolean[range+1];//at range +1 trials the probability is 100% 
-        int count = 2, draw; //count starts at 2 cus minimum for a repeat, draw: the current draw
+        boolean[] set = new boolean[range];// the calendar
+        int count = 1, draw; //count starts at 2 cus minimum for a repeat (aka one person), draw: the current draw
         
         draw = generator.nextInt(range);// random number in range [0,range) (Jan 1 = 0)
         set[draw] = true; //flags the value as already draw (false index is one that hasn't been drawn)
