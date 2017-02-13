@@ -16,10 +16,10 @@ public class StudentInfo {
     public static void display() {
 
 	System.out.println("************************************************************");
-	System.out.println("*                                                          *");
-	System.out.println("*                                                          *");
-	System.out.println("*                                                          *");
-	System.out.println("*                                                          *");
+	System.out.println("* Student Names: Aleeza Ladhani, Mac Linh Pham             *");
+	System.out.println("* Student Numbers: 8195730, 8703691                        *");
+	System.out.println("* Section: C                                               *");
+	System.out.println("* Assignment #: 1                                          *");
 	System.out.println("************************************************************");
 	System.out.println();
 

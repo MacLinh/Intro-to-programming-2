@@ -101,8 +101,8 @@ public class BirthdayParadox {
         }
 
         chart.addPolynome(0.525);
-        chart.addPolynome(0.48);
-        chart.addPolynome(0.57);
+        chart.addPolynome(0.492);
+        chart.addPolynome(0.555);
         chart.render();
     }
     
