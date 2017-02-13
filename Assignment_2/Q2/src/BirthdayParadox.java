@@ -1,4 +1,3 @@
-
 /**
  * The class  <b>BirthdayParadox</b> is used to
  * simulated the so-called Birthday paradox, and uses
@@ -8,6 +7,12 @@
  * @author gvj (gvj@eecs.uottawa.ca)
  *
  */
+
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 2
+// Question: 2
 
 public class BirthdayParadox {
     
@@ -33,7 +38,6 @@ public class BirthdayParadox {
             stats.updateStatistics(oneRun(range));
         }
         return stats;
-        
     }
     
     /** 
@@ -49,10 +53,10 @@ public class BirthdayParadox {
     
     private static int oneRun(int range){
         boolean[] set = new boolean[range];// the calendar
-        int count = 1, draw; //count starts at 2 cus minimum for a repeat (aka one person), draw: the current draw
+        int count = 1, draw; // count starts at 2 becasue this is the minimum for a repeat (aka one person), draw: the current draw
         
         draw = generator.nextInt(range);// random number in range [0,range) (Jan 1 = 0)
-        set[draw] = true; //flags the value as already draw (false index is one that hasn't been drawn)
+        set[draw] = true; // flags the value as already drawn (false index is one that hasn't been drawn)
         
         while (true){
             draw = generator.nextInt(range);
@@ -77,13 +81,14 @@ public class BirthdayParadox {
      * the size of the set and the number of runs
      */
     public static void main(String[] args) {
+        StudentInfo.display();
         int start, max, runs;
         if(args.length == 3){
             try{
                 start = Integer.parseInt(args[0]);
                 max = Integer.parseInt(args[1]);
                 runs = Integer.parseInt(args[2]);
-            }catch(NumberFormatException e){//if typo just go default
+            }catch(NumberFormatException e){// if typo just go default
                 start = 100;
                 max = 10000;
                 runs = 1000;
