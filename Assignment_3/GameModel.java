@@ -201,6 +201,13 @@ public class GameModel {
   }
   
   /**
+   * updates the number of captured dots
+   */
+  public void progress(){
+    numCaptured++;
+  }
+  
+  /**
    * The metod <b>isFinished</b> returns true iff the game is finished, that
    * is, all the dats are captured.
    *
@@ -210,6 +217,9 @@ public class GameModel {
     return numCaptured == size*size;
   }
   
+  /**
+   * @return the appropriate icon size view should use to display
+   */
   public int getIconSize(){
     if (size <= 10)
       return DotButton.NORMAL_SIZE;

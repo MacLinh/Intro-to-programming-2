@@ -31,7 +31,7 @@ public class GameController implements ActionListener {
   public GameController(int size) {
     model = new GameModel(size);
     view = new GameView(model,this);
-    model.get(0,0).setCaptured(true); // captures the top corner to start the game
+    reset();
   }
   
   /**
@@ -39,6 +39,10 @@ public class GameController implements ActionListener {
    */
   public void reset(){
     model.reset();
+    DotInfo dotZero = model.get(0,0);
+    dotZero.setCaptured(true); // captures the top corner to start the game
+    model.setCurrentSelectedColor(dotZero.getColor());
+    model.progress();
     view.update();
   }
   
@@ -76,9 +80,15 @@ public class GameController implements ActionListener {
    *            the newly selected color
    */
   public void selectColor(int color){
+    if(color == model.getCurrentSelectedColor()) // do nothing if misclick
+      return;
+    
+    model.setCurrentSelectedColor(color);  
     flood(color);
     model.step();
     view.update();
+    if(model.isFinished())
+      view.displayWin();
     
   }
   
@@ -139,6 +149,7 @@ public class GameController implements ActionListener {
         n = model.get(x-1,y); // dot to the left
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
+          model.progress();
           stack.push(n);
         }
       }
@@ -147,6 +158,7 @@ public class GameController implements ActionListener {
         n = model.get(x+1,y); // dot to the right
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
+          model.progress();
           stack.push(n);
         }
       }
@@ -155,6 +167,7 @@ public class GameController implements ActionListener {
         n = model.get(x,y-1); // dot above
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
+          model.progress();
           stack.push(n);
         }
       }
@@ -163,6 +176,7 @@ public class GameController implements ActionListener {
         n = model.get(x,y+1); // dot below
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
+          model.progress();
           stack.push(n);
         }
       }

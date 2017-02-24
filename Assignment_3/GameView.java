@@ -45,12 +45,12 @@ public class GameView extends JFrame {
   /**
    * the current state of the game
    */
-  GameModel model;
+  private GameModel model;
   
   /**
    * the controller
    */
-  GameController controller;
+  private GameController controller;
   
   /**
    * Constructor used for initializing the Frame
@@ -133,4 +133,20 @@ public class GameView extends JFrame {
     stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
   }
   
+  public void displayWin(){
+    Object[] options = {"play again",
+      "exit"};
+    int n = JOptionPane.showOptionDialog(this,
+                                         "You won in "+model.getNumberOfSteps()+" steps!\nwWould you like to go again?",
+                                         "won",
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.QUESTION_MESSAGE,
+                                         null,     
+                                         options,
+                                         options[0]);
+    if (n == 0)
+      controller.reset();
+    else
+      System.exit(0);
+  }
 }
