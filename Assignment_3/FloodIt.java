@@ -17,9 +17,7 @@ public class FloodIt {
      *            command line parameters
      */
      public static void main(String[] args) {
-       GameModel data = new GameModel(12);
-       System.out.println(data);
-       GameView view = new GameView(data,null);
+       new GameController(50);
 // ADD YOUR CODE HERE
 
    }

@@ -50,7 +50,7 @@ public class GameModel {
   private int steps;
   
   /**
-   * the current color selected by the player\
+   * the current color selected by the player
    */
   private int selectedColor;
   /**
@@ -210,6 +210,13 @@ public class GameModel {
     return numCaptured == size*size;
   }
   
+  public int getIconSize(){
+    if (size <= 10)
+      return DotButton.NORMAL_SIZE;
+    else if(size <= 25)
+      return DotButton.MEDIUM_SIZE;
+    return DotButton.SMALL_SIZE;
+  }
   
   /**
    * Builds a String representation of the model

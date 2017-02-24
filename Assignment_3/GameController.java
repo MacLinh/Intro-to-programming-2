@@ -1,5 +1,4 @@
 import java.awt.event.*;
-import javax.swing.*;
 /**
  * The class <b>GameController</b> is the controller of the game. It has a method
  * <b>selectColor</b> which is called by the view when the player selects the next
@@ -32,6 +31,7 @@ public class GameController implements ActionListener {
   public GameController(int size) {
     model = new GameModel(size);
     view = new GameView(model,this);
+    model.get(0,0).setCaptured(true); // captures the top corner to start the game
   }
   
   /**
@@ -51,11 +51,18 @@ public class GameController implements ActionListener {
   
   public void actionPerformed(ActionEvent e) {
     Object b = e.getSource(); // 
+    //System.out.println(e.getActionCommand());
     if (b instanceof DotButton){ //select a color
-      
+      int color = Integer.parseInt(e.getActionCommand());
+      selectColor(color);
     }
     else { // if its a normal button then reset or quit
       String s = e.getActionCommand();
+      
+      if(s.equals("Reset"))
+        reset();
+      else if(s.equals("Quit"))
+        System.exit(0);
     }
   }
   
@@ -69,8 +76,9 @@ public class GameController implements ActionListener {
    *            the newly selected color
    */
   public void selectColor(int color){
-    
-// ADD YOUR CODE HERE
+    flood(color);
+    model.step();
+    view.update();
     
   }
   
@@ -112,24 +120,54 @@ public class GameController implements ActionListener {
     };
     
     for(DotInfo dot : model.getDots()){
-      if(dot.isCaptured())
+      if(dot.isCaptured()){
+        dot.setColor(color);
         stack.push(dot);
+      }
     }
     
     do{
       DotInfo d = stack.pop(), n;
-      int x = d.getX(), y = d.getY();
-      n = model.get(d.getX()-1,d.getY()); // dot to the left
-      if((!n.isCaptured()) && n.equals(d)){
-        n.setCaptured(true);
-        stack.push(n);
+      int x = d.getX(), y = d.getY(), size = model.getSize();
+      
+      /*      [y-1]
+       * [x-1][ d ][x+1]
+       *      [y+1]
+       */
+      
+      if(x > 0){ //can't check a dot not on the grid
+        n = model.get(x-1,y); // dot to the left
+        if((!n.isCaptured()) && n.equals(d)){
+          n.setCaptured(true);
+          stack.push(n);
+        }
       }
       
+      if(x < size-1){ 
+        n = model.get(x+1,y); // dot to the right
+        if((!n.isCaptured()) && n.equals(d)){
+          n.setCaptured(true);
+          stack.push(n);
+        }
+      }
       
+      if(y > 0){ 
+        n = model.get(x,y-1); // dot above
+        if((!n.isCaptured()) && n.equals(d)){
+          n.setCaptured(true);
+          stack.push(n);
+        }
+      }
+      
+      if(y < size-1){ 
+        n = model.get(x,y+1); // dot below
+        if((!n.isCaptured()) && n.equals(d)){
+          n.setCaptured(true);
+          stack.push(n);
+        }
+      }
     }while(!stack.isEmpty());
     
   }
-  
-  
   
 }

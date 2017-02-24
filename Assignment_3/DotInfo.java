@@ -87,9 +87,21 @@ public class DotInfo {
     return color;
   }
   
+  /**
+   * sets the color\
+   */
+  public void setColor(int color) {
+    this.color = color;
+  }
+  
+  /**
+   * tests if is equal to another dot aka is it same color?
+   * 
+   * @return returns if same color
+   */
   @Override
   public boolean equals(Object ref){
-    DotButton other = (DotButton) ref;
+    DotInfo other = (DotInfo) ref;
     return color == other.getColor();
   }
 }

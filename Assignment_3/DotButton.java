@@ -24,12 +24,21 @@ import javax.swing.*;
 
 public class DotButton extends JButton {
   
+  public static final int SMALL_SIZE = 15, MEDIUM_SIZE = 30, NORMAL_SIZE = 50;
   /**
    * the color and size of the button
    */
-  private int color, iconSize;
+  private int color;
 
-
+  /**
+   * the different icons available
+   */
+  private static ImageIcon[] icons; // this is static so its only loaded once to save memory and time
+  
+  /**
+   * the current icon size of all buttons
+   */
+  private static int iconSize;
     /**
      * Constructor used for initializing a cell of a specified color.
      * 
@@ -60,14 +69,38 @@ public class DotButton extends JButton {
      */   
     public DotButton(int color, int iconSize) {
       this.color = color;
-      this.iconSize = iconSize;
-      setPreferredSize(new Dimension(50,50));
-      ImageIcon icon = new ImageIcon("data/N/ball-"+color+".png");
-      setIcon(icon);
+      setPreferredSize(new Dimension(iconSize,iconSize));
+      
+      if(this.iconSize != iconSize){
+        this.iconSize = iconSize;
+        loadImages();
+      }
+      setIcon(icons[color]);
+      setBackground(Color.white);
+      setActionCommand(""+color);
     }
- 
-
-
+    
+    /**
+     * loads all the image files. Note: 
+     */
+    private static void loadImages(){
+      icons = new ImageIcon[GameModel.NUMBER_OF_COLORS];
+      
+      String folder;
+      if(iconSize == SMALL_SIZE)
+        folder = "S";
+      else if(iconSize == MEDIUM_SIZE)
+        folder = "M";
+      else if(iconSize == NORMAL_SIZE)
+        folder = "N";
+      else
+        throw new IllegalArgumentException("icon size doesn't exist");
+      
+      for(int i = 0; i < icons.length; i++){
+        icons[i] = new ImageIcon("data/"+folder+"/ball-"+i+".png");
+      }
+    }
+    
     /**
      * Changes the cell color of this cell. The image is updated accordingly.
      * 
@@ -77,8 +110,7 @@ public class DotButton extends JButton {
 
     public void setColor(int color) {
       this.color = color;
-      ImageIcon icon = new ImageIcon("data/N/ball-"+color+".png");
-      setIcon(icon);
+      setIcon(icons[color]);
    }
 
     /**
