@@ -91,7 +91,11 @@ public class BirthdayParadox {
 
     public static void main(String[] args) {
         StudentInfo.display();
+<<<<<<< Updated upstream
         //long startTime = System.currentTimeMillis();
+=======
+       // long startTime = System.currentTimeMillis();
+>>>>>>> Stashed changes
         int range, runs;
         if(args.length == 2){
             try{
@@ -108,6 +112,10 @@ public class BirthdayParadox {
         }
         System.out.println("We have run "+ runs + " experiments");
         System.out.println(runExperiments(range,runs));
+<<<<<<< Updated upstream
         //System.out.println("Total Runtime = "+ (System.currentTimeMillis()-startTime));
+=======
+       // System.out.println("Total Runtime = "+ (System.currentTimeMillis()-startTime));
+>>>>>>> Stashed changes
     }
 }

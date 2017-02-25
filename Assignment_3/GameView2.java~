@@ -10,7 +10,7 @@ import javax.swing.*;
  * @author Guy-Vincent Jourdan, University of Ottawa
  */
 
-public class GameView extends JFrame {
+public class GameView2 extends JFrame {
   
   /**
    * this panel will hold the size x size grid of dots
@@ -65,7 +65,7 @@ public class GameView extends JFrame {
     super();
     this.model = model;
     controller = gameController;
-    iconSize = model.getIconSize();
+    iconSize = 50//model.getIconSize();
     dots = new DotButton[model.getSize()*model.getSize()];
     init();
   }
@@ -124,13 +124,21 @@ public class GameView extends JFrame {
    * update the status of the board's DotButton instances based on the current game model
    */
   public void update(){
-    for (int i = 0; i < dots.length; i++){
+    /*for (int i = 0; i < dots.length; i++){
       if (dots[i] == null)
         dots[i] = new DotButton(model.getColor(i),iconSize);
       else
-        dots[i].setColor(model.getColor(i));
-    }
-    stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
+      dots[i].setColor(model.getColor(i));
+      }*/
+      for(int i = 0; i < model.getSize();i++){
+          for(int j = 0; j < model.getSize();j++){
+              f (dots[i] == null)
+                  dots[i] = new DotButton(model.getColor(i,j),iconSize);
+              else
+                  dots[i].setColor(model.getColor(i,j));
+          }
+      }
+      stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
   }
   
   public void displayWin(){

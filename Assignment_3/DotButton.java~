@@ -1,4 +1,5 @@
-// ADD YOUR IMPORTS HERE
+import java.awt.*;
+import javax.swing.*;
 
 /**
  * In the application <b>FloodIt</b>, a <b>DotButton</b> is a specialized color of
@@ -22,11 +23,22 @@
  */
 
 public class DotButton extends JButton {
+  
+  public static final int SMALL_SIZE = 15, MEDIUM_SIZE = 30, NORMAL_SIZE = 50;
+  /**
+   * the color and size of the button
+   */
+  private int color;
 
-
-// ADD YOUR INSTANCE VARIABLES HERE
-
-
+  /**
+   * the different icons available
+   */
+  private static ImageIcon[] icons; // this is static so its only loaded once to save memory and time
+  
+  /**
+   * the current icon size of all buttons
+   */
+  private static int iconSize;
     /**
      * Constructor used for initializing a cell of a specified color.
      * 
@@ -56,13 +68,39 @@ public class DotButton extends JButton {
      *            specifies the size to use, one of SMALL_SIZE, MEDIUM_SIZE or MEDIUM_SIZE
      */   
     public DotButton(int color, int iconSize) {
-
-// ADD YOUR CODE HERE
-
+      this.color = color;
+      setPreferredSize(new Dimension(iconSize,iconSize));
+      
+      if(this.iconSize != iconSize){
+        this.iconSize = iconSize;
+        loadImages();
+      }
+      setIcon(icons[color]);
+      setBackground(Color.white);
+      setActionCommand(""+color);
     }
- 
-
-
+    
+    /**
+     * loads all the image files. Note: 
+     */
+    private static void loadImages(){
+      icons = new ImageIcon[GameModel.NUMBER_OF_COLORS];
+      
+      String folder;
+      if(iconSize == SMALL_SIZE)
+        folder = "S";
+      else if(iconSize == MEDIUM_SIZE)
+        folder = "M";
+      else if(iconSize == NORMAL_SIZE)
+        folder = "N";
+      else
+        throw new IllegalArgumentException("icon size doesn't exist");
+      
+      for(int i = 0; i < icons.length; i++){
+        icons[i] = new ImageIcon("data/"+folder+"/ball-"+i+".png");
+      }
+    }
+    
     /**
      * Changes the cell color of this cell. The image is updated accordingly.
      * 
@@ -71,9 +109,8 @@ public class DotButton extends JButton {
      */
 
     public void setColor(int color) {
-
-// ADD YOUR CODE HERE
-
+      this.color = color;
+      setIcon(icons[color]);
    }
 
     /**
@@ -82,9 +119,7 @@ public class DotButton extends JButton {
      * @return color
      */
     public int getColor(){
-
-// ADD YOUR CODE HERE
-
+      return color;
     }
  
     /**
@@ -94,9 +129,7 @@ public class DotButton extends JButton {
      */
 
     public int getRow() {
-
-// ADD YOUR CODE HERE
-
+      return 0;
     }
 
     /**
@@ -106,9 +139,7 @@ public class DotButton extends JButton {
      */
 
     public int getColumn() {
-
-// ADD YOUR CODE HERE
-
+      return 0;
     }
 
 
