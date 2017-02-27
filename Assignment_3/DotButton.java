@@ -111,6 +111,7 @@ public class DotButton extends JButton {
     public void setColor(int color) {
       this.color = color;
       setIcon(icons[color]);
+      setActionCommand(""+color);
    }
 
     /**

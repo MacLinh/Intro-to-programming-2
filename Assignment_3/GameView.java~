@@ -110,13 +110,19 @@ public class GameView extends JFrame {
       grid.add(dot);
     }
     
-    setLayout(new FlowLayout(FlowLayout.CENTER));
+    setLayout(new FlowLayout());
     setSize(width+20,height+150);// have to make slightly bigger cus the size includes the borders
-    setResizable(false);
+    //setResizable(false);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
-    setVisible(true);
+    
     add(grid);
     add(actionPanel);
+    try{
+        Thread.sleep(100);
+    }catch (InterruptedException e){
+        System.out.println("error");
+    }
+    setVisible(true);
     //pack();
   }
   
@@ -130,6 +136,7 @@ public class GameView extends JFrame {
       else
         dots[i].setColor(model.getColor(i));
     }
+    System.out.println(dots[0].getColor());
     stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
   }
   

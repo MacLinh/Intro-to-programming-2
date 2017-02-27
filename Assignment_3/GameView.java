@@ -130,11 +130,13 @@ public class GameView extends JFrame {
    * update the status of the board's DotButton instances based on the current game model
    */
   public void update(){
-    for (int i = 0; i < dots.length; i++){
-      if (dots[i] == null)
-        dots[i] = new DotButton(model.getColor(i),iconSize);
-      else
-        dots[i].setColor(model.getColor(i));
+      for (int i = 0; i < dots.length; i++){
+          if (dots[i] == null){
+              dots[i] = new DotButton(model.getColor(i),iconSize);
+              dots[i].addActionListener(controller);
+          }
+          else
+              dots[i].setColor(model.getColor(i));
     }
     System.out.println(dots[0].getColor());
     stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());

@@ -18,7 +18,7 @@ public class GameController implements ActionListener {
   /**
    * the view
    */
-  private GameView2 view;
+  private GameView view;
   
   
   /**
@@ -30,7 +30,7 @@ public class GameController implements ActionListener {
    */
   public GameController(int size) {
     model = new GameModel(size);
-    view = new GameView2(model,this);
+    view = new GameView(model,this);
     reset();
   }
   
