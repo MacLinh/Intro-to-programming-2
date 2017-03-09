@@ -25,7 +25,7 @@ public class GameView2 extends JFrame {
   /**
    * all the dots on the grid
    */
-  private DotButton[] dots;
+  private DotButton2[] dots;
   
   /**
    * displays the number of steps taken
@@ -40,7 +40,7 @@ public class GameView2 extends JFrame {
    /**
    * the size of the buttons to be displayed
    */
-  private int iconSize;
+  private int iconSize = 50;
   
   /**
    * the current state of the game
@@ -66,7 +66,7 @@ public class GameView2 extends JFrame {
     this.model = model;
     controller = gameController;
     iconSize = 50;//model.getIconSize();
-    dots = new DotButton[model.getSize()*model.getSize()];
+    dots = new DotButton2[model.getSize()*model.getSize()];
     init();
   }
   
@@ -91,7 +91,7 @@ public class GameView2 extends JFrame {
     
     actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,5,5));
     for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
-      DotButton dot = new DotButton(i,50);
+      DotButton2 dot = new DotButton2(i,50);
       dot.addActionListener(controller);
       actionPanel.add(dot);
     }
@@ -106,7 +106,7 @@ public class GameView2 extends JFrame {
     grid = new JPanel(new FlowLayout(FlowLayout.LEADING,0,0));
     grid.setPreferredSize(new Dimension(width,height));
     update();
-    for(DotButton dot : dots){
+    for(DotButton2 dot : dots){
       grid.add(dot);
     }
     
@@ -121,20 +121,22 @@ public class GameView2 extends JFrame {
   }
   
   /**
-   * update the status of the board's DotButton instances based on the current game model
+   * update the status of the board's DotButton2 instances based on the current game model
    */
   public void update(){
     /*for (int i = 0; i < dots.length; i++){
       if (dots[i] == null)
-        dots[i] = new DotButton(model.getColor(i),iconSize);
+        dots[i] = new DotButton2(model.getColor(i),iconSize);
       else
       dots[i].setColor(model.getColor(i));
       }*/
       int n = 0;
       for(int i = 0; i < model.getSize();i++){
           for(int j = 0; j < model.getSize();j++){
-              if (dots[n] == null)
-                  dots[n] = new DotButton(model.getColor(i,j),iconSize);
+              if (dots[n] == null){
+                  dots[n] = new DotButton2(model.getColor(i,j),50);
+                  System.out.print(model.getColor(i,j));
+              }
               else
                   dots[n].setColor(model.getColor(i,j));
               n++;

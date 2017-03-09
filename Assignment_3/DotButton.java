@@ -24,16 +24,21 @@ import javax.swing.*;
 
 public class DotButton extends JButton {
   
-  public static final int SMALL_SIZE = 15, MEDIUM_SIZE = 30, NORMAL_SIZE = 50;
+  public static final int SMALL_SIZE = 15, MEDIUM_SIZE = 38, NORMAL_SIZE = 50;
   /**
    * the color and size of the button
    */
   private int color;
-
+  
+  /**
+   * the size of the button icon
+   */
+  private int type;
+  
   /**
    * the different icons available
    */
-  private static ImageIcon[] icons; // this is static so its only loaded once to save memory and time
+  private static ImageIcon[][] icons; // this is static so its only loaded once to save memory and time
   
   /**
    * the current icon size of all buttons
@@ -53,8 +58,8 @@ public class DotButton extends JButton {
      */
 
     public DotButton(int row, int column, int color, int iconSize) {
-
-// ADD YOUR CODE HERE
+        // I never used this one
+        this(color,iconSize);
 
    }
 
@@ -71,35 +76,43 @@ public class DotButton extends JButton {
       this.color = color;
       setPreferredSize(new Dimension(iconSize,iconSize));
       
-      if(this.iconSize != iconSize){
-        this.iconSize = iconSize;
-        loadImages();
+      if(icons == null) {
+          icons = new ImageIcon[3][6];
+          for(int i = 0; i < icons[0].length; i++){
+              icons[0][i] = new ImageIcon("data/"+"S"+"/ball-"+i+".png");
+          }
+          for(int i = 0; i < icons[0].length; i++){
+              icons[1][i] = new ImageIcon("data/"+"M"+"/ball-"+i+".png");
+          }
+          for(int i = 0; i < icons[0].length; i++){
+              icons[2][i] = new ImageIcon("data/"+"N"+"/ball-"+i+".png");
+          }
+      
       }
-      setIcon(icons[color]);
-      setBackground(Color.white);
+      
+      switch(iconSize){
+          case SMALL_SIZE :
+              type = 0;
+              break;
+          case MEDIUM_SIZE :
+              type = 1;
+              break;
+          case NORMAL_SIZE :
+              type = 2;
+              break;
+          default:
+              System.out.println("invalid size");
+              
+      }
       setActionCommand(""+color);
+      setIcon(icons[type][color]);
+      setBackground(Color.white);
     }
     
     /**
      * loads all the image files. Note: 
      */
-    private static void loadImages(){
-      icons = new ImageIcon[GameModel.NUMBER_OF_COLORS];
-      
-      String folder;
-      if(iconSize == SMALL_SIZE)
-        folder = "S";
-      else if(iconSize == MEDIUM_SIZE)
-        folder = "M";
-      else if(iconSize == NORMAL_SIZE)
-        folder = "N";
-      else
-        throw new IllegalArgumentException("icon size doesn't exist");
-      
-      for(int i = 0; i < icons.length; i++){
-        icons[i] = new ImageIcon("data/"+folder+"/ball-"+i+".png");
-      }
-    }
+    
     
     /**
      * Changes the cell color of this cell. The image is updated accordingly.
@@ -110,8 +123,8 @@ public class DotButton extends JButton {
 
     public void setColor(int color) {
       this.color = color;
-      setIcon(icons[color]);
       setActionCommand(""+color);
+      setIcon(icons[type][color]);
    }
 
     /**

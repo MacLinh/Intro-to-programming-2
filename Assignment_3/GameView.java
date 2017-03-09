@@ -62,7 +62,7 @@ public class GameView extends JFrame {
    */
   
   public GameView(GameModel model, GameController gameController) {
-    super();
+    super("Flood It! The ITI1121 Version");
     this.model = model;
     controller = gameController;
     iconSize = model.getIconSize();
@@ -71,37 +71,38 @@ public class GameView extends JFrame {
   }
   
   /**
-   * initializes all the JComponents
+   * initializes all the Components
    */
   private void init(){
     int width, height;
-    System.out.println(iconSize);
+    
     width = height = iconSize*model.getSize();
     
     stepsLabel = new JLabel("Number of steps: 0");
     stepsLabel.setPreferredSize(new Dimension(150,50));
     
     reset = new JButton("Reset");
-    reset.setPreferredSize(new Dimension(70,35));
+    reset.setPreferredSize(new Dimension(69,34));
+    reset.setActionCommand(""+6);
     reset.addActionListener(controller);
     
     quit = new JButton("Quit");
-    quit.setPreferredSize(new Dimension(65,35));
+    quit.setPreferredSize(new Dimension(66,36));
+    quit.setActionCommand(""+7);
     quit.addActionListener(controller);
     
-    actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,5,5));
+    actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,4,4));
     for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
       DotButton dot = new DotButton(i,50);
       dot.addActionListener(controller);
       actionPanel.add(dot);
     }
-    //actionPanel.setBackground(Color.black);
+    
     actionPanel.setPreferredSize(new Dimension(335,115));
     actionPanel.add(stepsLabel);
     actionPanel.add(reset);
     actionPanel.add(quit);
     
-    //very important to load the grid last so that the images loaded is for the grid
     
     grid = new JPanel(new FlowLayout(FlowLayout.LEADING,0,0));
     grid.setPreferredSize(new Dimension(width,height));
@@ -113,17 +114,16 @@ public class GameView extends JFrame {
     setLayout(new FlowLayout());
     setSize(width+20,height+150);// have to make slightly bigger cus the size includes the borders
     //setResizable(false);
-    setDefaultCloseOperation(EXIT_ON_CLOSE);
+    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);// USE THE QUIT BUTTON 
     
     add(grid);
     add(actionPanel);
     try{
-        Thread.sleep(100);
-    }catch (InterruptedException e){
-        System.out.println("error");
+        Thread.sleep(99);// gives it some time to load
+    }catch (Exception e){//InterruptedException
+        //shouldnt happen
     }
     setVisible(true);
-    //pack();
   }
   
   /**
@@ -138,10 +138,12 @@ public class GameView extends JFrame {
           else
               dots[i].setColor(model.getColor(i));
     }
-    System.out.println(dots[0].getColor());
     stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
   }
   
+  /**
+   * creates a pop up dialogue when the user wins the game
+   */
   public void displayWin(){
     Object[] options = {"play again",
       "exit"};

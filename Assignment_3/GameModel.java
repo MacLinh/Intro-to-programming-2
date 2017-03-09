@@ -47,7 +47,7 @@ public class GameModel {
   /**
    * the number of steps taken so far by player
    */
-  private int steps;
+  private int steps = -1;
   
   /**
    * the current color selected by the player
@@ -70,7 +70,7 @@ public class GameModel {
     dots = new DotInfo[size*size];
     random = new Random();
     reset();
-    System.out.println(this);
+    
   }
   
   
@@ -236,10 +236,12 @@ public class GameModel {
    */
   public String toString(){
     String s = "";
-    for(int i = 0; i < size*size; i++){
+    int i = 0;
+    while(i < size*size){
       s += dots[i].getColor();
       if ((i+1)%size == 0)
         s += "\n";
+      i++;
     }
     return s;
   }

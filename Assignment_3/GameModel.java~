@@ -70,6 +70,7 @@ public class GameModel {
     dots = new DotInfo[size*size];
     random = new Random();
     reset();
+    System.out.println(this);
   }
   
   
