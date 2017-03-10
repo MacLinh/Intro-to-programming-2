@@ -79,13 +79,13 @@ public class DotButton extends JButton {
       if(icons == null) {
           icons = new ImageIcon[3][6];
           for(int i = 0; i < icons[0].length; i++){
-              icons[0][i] = new ImageIcon("data/"+"S"+"/ball-"+i+".png");
+              icons[0][i] = new ImageIcon("data/S/ball-"+i+".png");
           }
           for(int i = 0; i < icons[0].length; i++){
-              icons[1][i] = new ImageIcon("data/"+"M"+"/ball-"+i+".png");
+              icons[1][i] = new ImageIcon("data/M/ball-"+i+".png");
           }
           for(int i = 0; i < icons[0].length; i++){
-              icons[2][i] = new ImageIcon("data/"+"N"+"/ball-"+i+".png");
+              icons[2][i] = new ImageIcon("data/N/ball-"+i+".png");
           }
       
       }

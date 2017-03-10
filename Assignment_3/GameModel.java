@@ -56,7 +56,7 @@ public class GameModel {
   /**
    * to generate the random colors
    */
-  private Random random;
+  private static Random random;
   
   
   /**
@@ -68,7 +68,8 @@ public class GameModel {
   public GameModel(int size) {
     this.size = size;
     dots = new DotInfo[size*size];
-    random = new Random();
+    if(random == null) 
+        random = new Random();
     reset();
     
   }

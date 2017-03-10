@@ -23,7 +23,7 @@ public class ArrayStack implements Stack<DotInfo> {
         if(index == max-1){// expand
             DotInfo[] tmp = new DotInfo[max *= 2];
             for(int i = 0; i < dots.length; i++){
-                tmp[i] = dots[i]; // copies
+                tmp[i] = dots[i]; // copies 
             }
             dots = tmp;
         }

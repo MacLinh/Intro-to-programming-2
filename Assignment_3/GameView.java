@@ -52,6 +52,7 @@ public class GameView extends JFrame {
    */
   private GameController controller;
   
+  
   /**
    * Constructor used for initializing the Frame
    * 
@@ -60,7 +61,6 @@ public class GameView extends JFrame {
    * @param gameController
    *            the controller
    */
-  
   public GameView(GameModel model, GameController gameController) {
     super("Flood It! The ITI1121 Version");
     this.model = model;
@@ -69,6 +69,7 @@ public class GameView extends JFrame {
     dots = new DotButton[model.getSize()*model.getSize()];
     init();
   }
+  
   
   /**
    * initializes all the Components
@@ -83,12 +84,12 @@ public class GameView extends JFrame {
     
     reset = new JButton("Reset");
     reset.setPreferredSize(new Dimension(69,34));
-    reset.setActionCommand(""+6);
+    reset.setActionCommand("6");
     reset.addActionListener(controller);
     
     quit = new JButton("Quit");
     quit.setPreferredSize(new Dimension(66,36));
-    quit.setActionCommand(""+7);
+    quit.setActionCommand("7");
     quit.addActionListener(controller);
     
     actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,4,4));
@@ -126,6 +127,7 @@ public class GameView extends JFrame {
     setVisible(true);
   }
   
+  
   /**
    * update the status of the board's DotButton instances based on the current game model
    */
@@ -148,7 +150,7 @@ public class GameView extends JFrame {
     Object[] options = {"play again",
       "exit"};
     int n = JOptionPane.showOptionDialog(this,
-                                         "You won in "+model.getNumberOfSteps()+" steps!\nwWould you like to go again?",
+                                         "You won in "+model.getNumberOfSteps()+" steps!\nWould you like to go again?",
                                          "won",
                                          JOptionPane.YES_NO_OPTION,
                                          JOptionPane.QUESTION_MESSAGE,

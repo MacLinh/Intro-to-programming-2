@@ -60,8 +60,10 @@ public class GameController implements ActionListener {
         selectColor(command);
     else if (command < 7)
         reset();
-    else
+    else if (command < 8)
       System.exit(0);
+    else
+        throw new IllegalArgumentException("button does not exist");
         
   }
   
