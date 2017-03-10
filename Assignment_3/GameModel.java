@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 2
+
 import java.util.Random;
 
 /**
@@ -16,7 +21,6 @@ import java.util.Random;
  * @author Guy-Vincent Jourdan, University of Ottawa
  */
 public class GameModel {
-  
   
   /**
    * predefined values to capture the color of a DotInfo
@@ -40,12 +44,12 @@ public class GameModel {
   private DotInfo[] dots;
   
   /**
-   * number of captured dots, when value reaches the number of total dots the game is over
+   * number of captured dots; when value reaches the number of total dots, the game is over
    */
   private int numCaptured;
   
   /**
-   * the number of steps taken so far by player
+   * the number of steps taken so far by the player
    */
   private int steps = -1;
   
@@ -98,7 +102,7 @@ public class GameModel {
   }
   
   /**
-   * returns the current color  of a given dot in the game
+   * returns the current color of a given dot in the game
    * 
    * @param i
    *            the x coordinate of the dot
@@ -116,7 +120,7 @@ public class GameModel {
    * @param x the index of the dot
    */
   public int getColor(int x){
-    return dots[x].getColor(); // for purpose of updating grid, don't care about coordinates
+    return dots[x].getColor(); // for purpose of updating grid - we don't care about coordinates
   }
   /**
    * returns true is the dot is captured, false otherwise

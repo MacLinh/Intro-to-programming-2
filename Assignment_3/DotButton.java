@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 2
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -54,23 +59,22 @@ public class DotButton extends JButton {
      * @param color
      *            specifies the color of this cell
      * @param iconSize
-     *            specifies the size to use, one of SMALL_SIZE, MEDIUM_SIZE or MEDIUM_SIZE
+     *            specifies the size to use, one of SMALL_SIZE, MEDIUM_SIZE or NORMAL_SIZE
      */
 
     public DotButton(int row, int column, int color, int iconSize) {
-        // I never used this one
+        // This is unused
         this(color,iconSize);
+    }
 
-   }
-
- /**
+    /** 
      * Other constructor used for initializing a cell of a specified color.
      * no row or column info available. Uses "-1, -1" for row and column instead
      * 
      * @param color
      *            specifies the color of this cell
      * @param iconSize
-     *            specifies the size to use, one of SMALL_SIZE, MEDIUM_SIZE or MEDIUM_SIZE
+     *            specifies the size to use, one of SMALL_SIZE, MEDIUM_SIZE or NORMAL_SIZE
      */   
     public DotButton(int color, int iconSize) {
       this.color = color;
@@ -110,7 +114,7 @@ public class DotButton extends JButton {
     }
     
     /**
-     * loads all the image files. Note: 
+     * loads all the image files.
      */
     
     
@@ -155,9 +159,5 @@ public class DotButton extends JButton {
     public int getColumn() {
       return 0;
     }
-
-
-// ADD YOUR PRIVATE METHODS HERE (IF USING ANY)
-
 
 }

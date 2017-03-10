@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 2
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -115,14 +120,14 @@ public class GameView extends JFrame {
     setLayout(new FlowLayout());
     setSize(width+20,height+150);// have to make slightly bigger cus the size includes the borders
     //setResizable(false);
-    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);// USE THE QUIT BUTTON 
+    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);// USE THE QUIT BUTTON TO CLOSE
     
     add(grid);
     add(actionPanel);
     try{
-        Thread.sleep(99);// gives it some time to load
-    }catch (Exception e){//InterruptedException
-        //shouldnt happen
+        Thread.sleep(99); // gives it some time to load
+    }catch (Exception e){ //InterruptedException
+        //shouldn't happen
     }
     setVisible(true);
   }

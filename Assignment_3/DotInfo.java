@@ -1,3 +1,7 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 2
 
 /**
  * The class <b>DotInfo</b> is a simple helper class to store the initial color and state
@@ -19,7 +23,7 @@ public class DotInfo {
   private int color;
   
   /**
-   * whether or not the dot has been captured by player
+   * whether or not the dot has been captured by the player
    */
   private boolean captured;
   
@@ -95,7 +99,7 @@ public class DotInfo {
   }
   
   /**
-   * tests if is equal to another dot aka is it same color?
+   * tests if it is equal to another dot  - i.e. is it the same color?
    * 
    * @return returns if same color
    */

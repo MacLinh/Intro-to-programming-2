@@ -1,4 +1,7 @@
-
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 2
 
 /**
  * The class <b>FloodIt</b> launches the game
@@ -17,6 +20,7 @@ public class FloodIt {
      *            command line parameters
      */
      public static void main(String[] args) {
+        StudentInfo.display();
          int size = 12;
          if (args.length == 1){
              try{

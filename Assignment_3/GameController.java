@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 2
+
 import java.awt.event.*;
 /**
  * The class <b>GameController</b> is the controller of the game. It has a method
@@ -115,7 +120,7 @@ public class GameController implements ActionListener {
        *      [y+1]
        */
       
-      if(x > 0){ //can't check a dot not on the grid
+      if(x > 0){ // can't check a dot not on the grid
         n = model.get(x-1,y); // dot to the left
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);

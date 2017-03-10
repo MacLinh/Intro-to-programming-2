@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 2
+
 public class ArrayStack implements Stack<DotInfo> { 
     private int max = 144;
     private DotInfo[] dots = new DotInfo[max];
@@ -15,12 +20,12 @@ public class ArrayStack implements Stack<DotInfo> {
     
     @Override
     public DotInfo pop(){
-        return dots[index--];//I will assume the stack is not empty because i am the only one using it
+        return dots[index--]; // Assuming the stack is not empty as we are the only ones using it
     }
     
     @Override
     public void push(DotInfo dot){
-        if(index == max-1){// expand
+        if(index == max-1){ // expand
             DotInfo[] tmp = new DotInfo[max *= 2];
             for(int i = 0; i < dots.length; i++){
                 tmp[i] = dots[i]; // copies 
