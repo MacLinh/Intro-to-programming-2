@@ -19,7 +19,7 @@ public class StudentInfo {
 	System.out.println("* Student Names: Aleeza Ladhani, Mac Linh Pham             *");
 	System.out.println("* Student Numbers: 8195730, 8703691                        *");
 	System.out.println("* Section: C                                               *");
-	System.out.println("* Assignment #: 3                                         *");
+	System.out.println("* Assignment #: 3                                          *");
 	System.out.println("************************************************************");
 	System.out.println();
 
