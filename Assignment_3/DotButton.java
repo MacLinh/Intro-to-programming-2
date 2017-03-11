@@ -28,27 +28,59 @@ import javax.swing.*;
  */
 
 public class DotButton extends JButton {
-  
-  public static final int SMALL_SIZE = 15, MEDIUM_SIZE = 38, NORMAL_SIZE = 50;
-  /**
-   * the color and size of the button
-   */
-  private int color;
-  
-  /**
-   * the size of the button icon
-   */
-  private int type;
-  
-  /**
-   * the different icons available
-   */
-  private static ImageIcon[][] icons; // this is static so its only loaded once to save memory and time
-  
-  /**
-   * the current icon size of all buttons
-   */
-  private static int iconSize;
+    
+    /**
+     * the smallest sized icon
+     */
+    public static final int SMALL_SIZE = 15; 
+    
+    /**
+     * the medium sized icon
+     */
+    public static final int MEDIUM_SIZE = 38;
+    
+    /**
+     * the largest sized icon
+     */
+    public static final int NORMAL_SIZE = 50;
+    
+    /**
+     * the different icons available
+     */
+    public static ImageIcon[][] icons; // this is static so its only loaded once to save memory and time
+    
+    /**
+     * the color and size of the button
+     */
+    private int color;
+    
+    /**
+     * the size of the button icon
+     */
+    private int type;
+    
+    /**
+     * the current icon size of all buttons
+     */
+    private static int iconSize;
+    
+    /*
+     * initializes the all the icon images
+     */
+    static{
+        icons = new ImageIcon[3][GameModel.NUMBER_OF_COLORS];
+        for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
+            icons[0][i] = new ImageIcon("data/S/ball-"+i+".png");
+        }
+        for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
+            icons[1][i] = new ImageIcon("data/M/ball-"+i+".png");
+        }
+        for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
+            icons[2][i] = new ImageIcon("data/N/ball-"+i+".png");
+        }
+    }
+    
+    
     /**
      * Constructor used for initializing a cell of a specified color.
      * 
@@ -61,12 +93,12 @@ public class DotButton extends JButton {
      * @param iconSize
      *            specifies the size to use, one of SMALL_SIZE, MEDIUM_SIZE or NORMAL_SIZE
      */
-
     public DotButton(int row, int column, int color, int iconSize) {
         // This is unused
         this(color,iconSize);
     }
-
+    
+    
     /** 
      * Other constructor used for initializing a cell of a specified color.
      * no row or column info available. Uses "-1, -1" for row and column instead
@@ -77,45 +109,27 @@ public class DotButton extends JButton {
      *            specifies the size to use, one of SMALL_SIZE, MEDIUM_SIZE or NORMAL_SIZE
      */   
     public DotButton(int color, int iconSize) {
-      this.color = color;
-      setPreferredSize(new Dimension(iconSize,iconSize));
-      
-      if(icons == null) {
-          icons = new ImageIcon[3][6];
-          for(int i = 0; i < icons[0].length; i++){
-              icons[0][i] = new ImageIcon("data/S/ball-"+i+".png");
-          }
-          for(int i = 0; i < icons[0].length; i++){
-              icons[1][i] = new ImageIcon("data/M/ball-"+i+".png");
-          }
-          for(int i = 0; i < icons[0].length; i++){
-              icons[2][i] = new ImageIcon("data/N/ball-"+i+".png");
-          }
-      
-      }
-      
-      switch(iconSize){
-          case SMALL_SIZE :
-              type = 0;
-              break;
-          case MEDIUM_SIZE :
-              type = 1;
-              break;
-          case NORMAL_SIZE :
-              type = 2;
-              break;
-          default:
-              System.out.println("invalid size");
-              
-      }
-      setActionCommand(""+color);
-      setIcon(icons[type][color]);
-      setBackground(Color.white);
+        this.color = color;
+        setPreferredSize(new Dimension(iconSize,iconSize));
+        
+        switch(iconSize){
+            case SMALL_SIZE :
+                type = 0;
+                break;
+            case MEDIUM_SIZE :
+                type = 1;
+                break;
+            case NORMAL_SIZE :
+                type = 2;
+                break;
+            default:
+                throw new IllegalArgumentException("the icon size "+iconSize+" does not exist");
+                
+        }
+        setActionCommand(""+color);
+        setIcon(icons[type][color]);
+        setBackground(Color.white);
     }
-    
-    /**
-     * loads all the image files.
-     */
     
     
     /**
@@ -124,40 +138,40 @@ public class DotButton extends JButton {
      * @param color
      *            the color to set
      */
-
-    public void setColor(int color) {
-      this.color = color;
-      setActionCommand(""+color);
-      setIcon(icons[type][color]);
-   }
-
+    
+    public synchronized void setColor(int color) {
+        this.color = color;
+        setActionCommand(""+color);
+        setIcon(icons[type][color]);
+    }
+    
     /**
      * Getter for color
      *
      * @return color
      */
     public int getColor(){
-      return color;
+        return color;
     }
- 
+    
     /**
      * Getter method for the attribute row.
      * 
      * @return the value of the attribute row
      */
-
+    
     public int getRow() {
-      return 0;
+        return 0; //unused
     }
-
+    
     /**
      * Getter method for the attribute column.
      * 
      * @return the value of the attribute column
      */
-
+    
     public int getColumn() {
-      return 0;
+        return 0; //unused
     }
-
+    
 }
