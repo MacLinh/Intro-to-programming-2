@@ -152,7 +152,7 @@ public class GameView extends JFrame {
      */
     public void displayWin(){
         try{
-            Thread.sleep(1000);
+            Thread.sleep(100);
         }catch(InterruptedException e){
         }
         Object[] options = {"play again",

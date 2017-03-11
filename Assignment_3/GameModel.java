@@ -43,10 +43,6 @@ public class GameModel {
      */
     private DotInfo[] dots;
     
-    /**
-     * number of captured dots; when value reaches the number of total dots, the game is over
-     */
-    private int numCaptured;
     
     /**
      * the number of steps taken so far by the player
@@ -84,7 +80,7 @@ public class GameModel {
      * is cleared up . 
      */
     public void reset(){
-        numCaptured = 0;
+        DotInfo.setNumberCaptured(0);
         steps = 0;
         for(int i = 0; i < size*size; i++){
             dots[i] = new DotInfo(i%size,(int)i/size,random.nextInt(NUMBER_OF_COLORS));
@@ -219,12 +215,6 @@ public class GameModel {
         steps++;
     }
     
-    /**
-     * updates the number of captured dots
-     */
-    public void progress(){
-        numCaptured++;
-    }
     
     /**
      * The metod <b>isFinished</b> returns true iff the game is finished, that
@@ -233,7 +223,7 @@ public class GameModel {
      * @return true if the game is finished, false otherwise
      */
     public boolean isFinished(){
-        return numCaptured == size*size;
+        return DotInfo.getNumberCaptured() == size*size;
     }
     
     /**

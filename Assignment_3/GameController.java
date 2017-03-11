@@ -48,7 +48,6 @@ public class GameController implements ActionListener {
     dotZero.setCaptured(true); // captures the top corner to start the game
     model.setCurrentSelectedColor(dotZero.getColor());
     flood(dotZero.getColor());
-    model.progress();
     view.update();
   }
   
@@ -124,7 +123,6 @@ public class GameController implements ActionListener {
         n = model.get(x-1,y); // dot to the left
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
-          model.progress();
           stack.push(n);
         }
       }
@@ -133,7 +131,6 @@ public class GameController implements ActionListener {
         n = model.get(x+1,y); // dot to the right
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
-          model.progress();
           stack.push(n);
         }
       }
@@ -142,7 +139,6 @@ public class GameController implements ActionListener {
         n = model.get(x,y-1); // dot above
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
-          model.progress();
           stack.push(n);
         }
       }
@@ -151,7 +147,6 @@ public class GameController implements ActionListener {
         n = model.get(x,y+1); // dot below
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
-          model.progress();
           stack.push(n);
         }
       }
