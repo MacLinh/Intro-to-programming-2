@@ -159,7 +159,7 @@ public class GameView extends JFrame {
             "exit"};
         int n = JOptionPane.showOptionDialog(this,
                                              "You won in "+model.getNumberOfSteps()+" steps!\nWould you like to go again?",
-                                             "won",
+                                             "You Win!",
                                              JOptionPane.YES_NO_OPTION,
                                              JOptionPane.QUESTION_MESSAGE,
                                              DotButton.icons[2][model.getCurrentSelectedColor()],     
