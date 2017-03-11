@@ -91,6 +91,8 @@ public class DotInfo {
     public void setCaptured(boolean captured) {
         if(captured)
             numCaptured++;
+        else 
+            numCaptured--;
         this.captured = captured;
     }
     
