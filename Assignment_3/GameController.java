@@ -65,7 +65,7 @@ public class GameController implements ActionListener {
     else if (command < 7)
         reset();
     else if (command < 8)
-      System.exit(0);
+      view.showQuitDialogue();
     else
         throw new IllegalArgumentException("button does not exist");
         

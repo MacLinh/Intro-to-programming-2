@@ -170,4 +170,21 @@ public class GameView extends JFrame {
         else
             System.exit(0);
     }
+    
+    public void showQuitDialogue(){
+        Object[] options = {"Cancel",
+            "Exit"};
+        int n = JOptionPane.showOptionDialog(this,
+                                             "Are you sure?",
+                                             "Exit Game?",
+                                             JOptionPane.YES_NO_OPTION,
+                                             JOptionPane.QUESTION_MESSAGE,
+                                             DotButton.icons[2][model.getCurrentSelectedColor()],     
+                                             options,
+                                             options[0]);
+        if (n == 0);
+        else
+            System.exit(0);
+    }
+    
 }
