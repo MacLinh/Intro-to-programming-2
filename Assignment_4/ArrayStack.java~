@@ -1,0 +1,28 @@
+public class ArrayStack implements Stack<DotInfo> { // create an empty stack
+      DotInfo[] dots = new DotInfo[model.getSize()*model.getSize()];//max size of the stack is all the dots
+      int index = -1; // the top of the stack
+        
+      @Override
+      public boolean isEmpty(){
+        return index == -1;
+      }
+      
+      @Override
+      public DotInfo peek(){
+        if(!isEmpty()) // not really necessary for this assignment but why not?
+          return dots[index];
+        return null;
+      }
+      
+      @Override
+      public DotInfo pop(){
+        if(!isEmpty())
+          return dots[index--];
+        return null;
+      }
+      
+      @Override
+      public void push(DotInfo dot){
+         dots[++index] = dot;
+      }
+    }
