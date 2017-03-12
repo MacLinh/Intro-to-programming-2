@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 2
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -11,149 +16,175 @@ import javax.swing.*;
  */
 
 public class GameView extends JFrame {
-  
-  /**
-   * this panel will hold the size x size grid of dots
-   */
-  private JPanel grid;
-  
-  /**
-   * this panel will hold the buttons for the game
-   */
-  private JPanel actionPanel;
-  
-  /**
-   * all the dots on the grid
-   */
-  private DotButton[] dots;
-  
-  /**
-   * displays the number of steps taken
-   */
-  private JLabel stepsLabel;
- 
-  /**
-   * the reset and quit buttons
-   */
-  private JButton reset, quit;
-  
-   /**
-   * the size of the buttons to be displayed
-   */
-  private int iconSize;
-  
-  /**
-   * the current state of the game
-   */
-  private GameModel model;
-  
-  /**
-   * the controller
-   */
-  private GameController controller;
-  
-  /**
-   * Constructor used for initializing the Frame
-   * 
-   * @param model
-   *            the model of the game (already initialized)
-   * @param gameController
-   *            the controller
-   */
-  
-  public GameView(GameModel model, GameController gameController) {
-    super();
-    this.model = model;
-    controller = gameController;
-    iconSize = model.getIconSize();
-    dots = new DotButton[model.getSize()*model.getSize()];
-    init();
-  }
-  
-  /**
-   * initializes all the JComponents
-   */
-  private void init(){
-    int width, height;
-    System.out.println(iconSize);
-    width = height = iconSize*model.getSize();
     
-    stepsLabel = new JLabel("Number of steps: 0");
-    stepsLabel.setPreferredSize(new Dimension(150,50));
+    /**
+     * this panel will hold the size x size grid of dots
+     */
+    private JPanel grid;
     
-    reset = new JButton("Reset");
-    reset.setPreferredSize(new Dimension(70,35));
-    reset.addActionListener(controller);
+    /**
+     * this panel will hold the buttons for the game
+     */
+    private JPanel actionPanel;
     
-    quit = new JButton("Quit");
-    quit.setPreferredSize(new Dimension(65,35));
-    quit.addActionListener(controller);
+    /**
+     * all the dots on the grid
+     */
+    private DotButton[] dots;
     
-    actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,5,5));
-    for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
-      DotButton dot = new DotButton(i,50);
-      dot.addActionListener(controller);
-      actionPanel.add(dot);
-    }
-    //actionPanel.setBackground(Color.black);
-    actionPanel.setPreferredSize(new Dimension(335,115));
-    actionPanel.add(stepsLabel);
-    actionPanel.add(reset);
-    actionPanel.add(quit);
+    /**
+     * displays the number of steps taken
+     */
+    private JLabel stepsLabel;
     
-    //very important to load the grid last so that the images loaded is for the grid
+    /**
+     * the reset and quit buttons
+     */
+    private JButton reset, quit;
     
-    grid = new JPanel(new FlowLayout(FlowLayout.LEADING,0,0));
-    grid.setPreferredSize(new Dimension(width,height));
-    update();
-    for(DotButton dot : dots){
-      grid.add(dot);
+    /**
+     * the size of the buttons to be displayed
+     */
+    private int iconSize;
+    
+    /**
+     * the current state of the game
+     */
+    private GameModel model;
+    
+    /**
+     * the controller
+     */
+    private GameController controller;
+    
+    
+    /**
+     * Constructor used for initializing the Frame
+     * 
+     * @param model
+     *            the model of the game (already initialized)
+     * @param gameController
+     *            the controller
+     */
+    public GameView(GameModel model, GameController gameController) {
+        super("Flood It! The ITI1121 Version");
+        this.model = model;
+        controller = gameController;
+        iconSize = model.getIconSize();
+        dots = new DotButton[model.getSize()*model.getSize()];
+        init();
     }
     
-    setLayout(new FlowLayout());
-    setSize(width+20,height+150);// have to make slightly bigger cus the size includes the borders
-    //setResizable(false);
-    setDefaultCloseOperation(EXIT_ON_CLOSE);
     
-    add(grid);
-    add(actionPanel);
-    try{
-        Thread.sleep(100);
-    }catch (InterruptedException e){
-        System.out.println("error");
+    /**
+     * initializes all the Components
+     */
+    private void init(){
+        int width, height;
+        
+        width = height = iconSize*model.getSize();
+        
+        stepsLabel = new JLabel("Number of steps: 0");
+        stepsLabel.setPreferredSize(new Dimension(150,50));
+        
+        reset = new JButton("Reset");
+        reset.setPreferredSize(new Dimension(69,34));
+        reset.setActionCommand("6");
+        reset.addActionListener(controller);
+        
+        quit = new JButton("Quit");
+        quit.setPreferredSize(new Dimension(69,34));
+        quit.setActionCommand("7");
+        quit.addActionListener(controller);
+        
+        //holds color selectors, quit and reset buttons
+        actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,4,4));
+        for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
+            DotButton dot = new DotButton(i,50);
+            dot.addActionListener(controller);
+            actionPanel.add(dot);
+        }
+        
+        actionPanel.setPreferredSize(new Dimension(335,115));
+        actionPanel.add(stepsLabel);
+        actionPanel.add(reset);
+        actionPanel.add(quit);
+        
+        //holds the grid of dots
+        grid = new JPanel(new GridLayout(model.getSize(),model.getSize()));
+        grid.setPreferredSize(new Dimension(width,height));
+        for (int i = 0; i < dots.length; i++){
+            dots[i] = new DotButton(model.getColor(i),iconSize);
+            dots[i].addActionListener(controller);
+            grid.add(dots[i]);
+        }
+        
+        setLayout(new FlowLayout());
+        setSize(width+20,height+150);// have to make slightly bigger cus the size includes the borders
+        setResizable(true);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);// USE THE QUIT BUTTON TO CLOSE
+        
+        add(grid);
+        add(actionPanel);
+        
+        try{
+            Thread.sleep(99); // gives it some time to load
+        }catch (Exception e){ //InterruptedException
+            //shouldn't happen
+        }
+        
+        setVisible(true);
     }
-    setVisible(true);
-    //pack();
-  }
-  
-  /**
-   * update the status of the board's DotButton instances based on the current game model
-   */
-  public void update(){
-    for (int i = 0; i < dots.length; i++){
-      if (dots[i] == null)
-        dots[i] = new DotButton(model.getColor(i),iconSize);
-      else
-        dots[i].setColor(model.getColor(i));
+    
+    
+    /**
+     * update the status of the board's DotButton instances based on the current game model
+     */
+    public void update(){
+        for (int i = 0; i < dots.length; i++){
+            dots[i].setColor(model.getColor(i));
+        }
+        stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
     }
-    System.out.println(dots[0].getColor());
-    stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
-  }
-  
-  public void displayWin(){
-    Object[] options = {"play again",
-      "exit"};
-    int n = JOptionPane.showOptionDialog(this,
-                                         "You won in "+model.getNumberOfSteps()+" steps!\nwWould you like to go again?",
-                                         "won",
-                                         JOptionPane.YES_NO_OPTION,
-                                         JOptionPane.QUESTION_MESSAGE,
-                                         null,     
-                                         options,
-                                         options[0]);
-    if (n == 0)
-      controller.reset();
-    else
-      System.exit(0);
-  }
+    
+    /**
+     * creates a pop up dialogue when the user wins the game
+     */
+    public void displayWin(){
+        try{
+            Thread.sleep(100);
+        }catch(InterruptedException e){
+        }
+        Object[] options = {"play again",
+            "exit"};
+        int n = JOptionPane.showOptionDialog(this,
+                                             "You won in "+model.getNumberOfSteps()+" steps!\nWould you like to go again?",
+                                             "You Win!",
+                                             JOptionPane.YES_NO_OPTION,
+                                             JOptionPane.QUESTION_MESSAGE,
+                                             DotButton.icons[2][model.getCurrentSelectedColor()],     
+                                             options,
+                                             options[0]);
+        if (n == 0)
+            controller.reset();
+        else
+            System.exit(0);
+    }
+    
+    public void showQuitDialogue(){
+        Object[] options = {"Cancel",
+            "Exit"};
+        int n = JOptionPane.showOptionDialog(this,
+                                             "Are you sure?",
+                                             "Exit Game?",
+                                             JOptionPane.YES_NO_OPTION,
+                                             JOptionPane.QUESTION_MESSAGE,
+                                             DotButton.icons[2][model.getCurrentSelectedColor()],     
+                                             options,
+                                             options[0]);
+        if (n == 0);
+        else
+            System.exit(0);
+    }
+    
 }

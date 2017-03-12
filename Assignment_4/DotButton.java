@@ -168,7 +168,7 @@ public class DotButton extends JButton {
      */
     
     public int getRow() {
-        int size = (int) Math.sqrt(total);
+        int size = (int) Math.sqrt(total); // will not work if it is not a perfect square grid
         return (int)number/size;
     }
     

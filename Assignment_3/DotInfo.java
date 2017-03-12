@@ -10,12 +10,9 @@
  * @author Guy-Vincent Jourdan, University of Ottawa
  */
 
-public class DotInfo {
-    
-    /**
-     * number of captured dots; when value reaches the number of total dots, the game is over
-     */
-    private static int numCaptured = 0;
+import java.io.*;
+
+public class DotInfo implements Serializable{
     
     /**
      * the x and y coordinate of the dot
@@ -52,19 +49,6 @@ public class DotInfo {
     
     
     /**
-     * sets the current captured dots
-     */
-    public static void setNumberCaptured(int num){
-        numCaptured = num;
-    }
-    
-    /**
-     * gets the number of captured dots
-     */
-    public static int getNumberCaptured(){
-        return numCaptured;
-    }
-    /**
      * Getter method for the attribute x.
      * 
      * @return the value of the attribute x
@@ -89,10 +73,6 @@ public class DotInfo {
      *            the new value for captured
      */
     public void setCaptured(boolean captured) {
-        if(captured)
-            numCaptured++;
-        else 
-            numCaptured--;
         this.captured = captured;
     }
     

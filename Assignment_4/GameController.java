@@ -89,7 +89,7 @@ public class GameController implements ActionListener {
       else if (command == 9)
         redo();
       else if (command == 10)
-        ;//showOptions();
+        view.displayOptions();
       else
         throw new IllegalArgumentException("button does not exist");
       return;

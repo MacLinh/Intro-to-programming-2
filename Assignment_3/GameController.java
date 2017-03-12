@@ -25,6 +25,10 @@ public class GameController implements ActionListener {
    */
   private GameView view;
   
+  /**
+   * used to hold redoable actions
+   */
+  private LinkedStack<GameModel> previousMoves;
   
   /**
    * Constructor used for initializing the controller. It creates the game's view 
@@ -36,6 +40,7 @@ public class GameController implements ActionListener {
   public GameController(int size) {
     model = new GameModel(size);
     view = new GameView(model,this);
+    previousMoves = new LinkedStack<GameModel>();
     reset();
   }
   
@@ -48,7 +53,8 @@ public class GameController implements ActionListener {
     dotZero.setCaptured(true); // captures the top corner to start the game
     model.setCurrentSelectedColor(dotZero.getColor());
     flood(dotZero.getColor());
-    view.update();
+    view.update(model);
+    //model.save();
   }
   
   /**
@@ -61,14 +67,20 @@ public class GameController implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     int command = Integer.parseInt(e.getActionCommand());
     if (command < 6)
-        selectColor(command);
-    else if (command < 7)
-        reset();
-    else if (command < 8)
+      selectColor(command);
+    else if (command == 6)
+      reset();
+    else if (command == 7)
       view.showQuitDialogue();
+    else if (command == 8)
+      undo();
+    else if (command == 9)
+      redo();
+    else if (command == 10)
+      ;//showOptions();
     else
-        throw new IllegalArgumentException("button does not exist");
-        
+      throw new IllegalArgumentException("button does not exist");
+    
   }
   
   /**
@@ -84,15 +96,49 @@ public class GameController implements ActionListener {
     if(color == model.getCurrentSelectedColor()) // do nothing if misclick
       return;
     
+    view.setRedoable(false);
+    previousMoves = new LinkedStack<GameModel>();
+    model.save();
+    view.setUndoable(true);
+    model = (GameModel)model.clone();
     model.setCurrentSelectedColor(color);  
     flood(color);
     model.step();
-    view.update();
+    view.update(model);
+    //model.save();
+   
     if(model.isFinished())
       view.displayWin();
     
   }
   
+  
+  /**
+   * undoes a move
+   */
+  private void undo(){
+    GameModel tmp = model.getHistory();
+    if(!model.hasHistory())
+      view.setUndoable(false);
+    previousMoves.push(model);
+    view.setRedoable(true);
+    model = tmp;
+    view.update(model);
+  }
+  
+  /**
+   * redoes a move
+   * precondition: previousMoves must not be empty
+   */
+  private void redo(){
+    GameModel tmp = previousMoves.pop();
+    if(previousMoves.isEmpty())
+      view.setRedoable(false);
+    model.save();
+    model = tmp;
+    view.update(model);
+    view.setUndoable(true);
+  }
   /**
    * floods the board based on the selected color
    * 
@@ -123,6 +169,7 @@ public class GameController implements ActionListener {
         n = model.get(x-1,y); // dot to the left
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
+          model.progress();
           stack.push(n);
         }
       }
@@ -131,6 +178,7 @@ public class GameController implements ActionListener {
         n = model.get(x+1,y); // dot to the right
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
+          model.progress();
           stack.push(n);
         }
       }
@@ -139,6 +187,7 @@ public class GameController implements ActionListener {
         n = model.get(x,y-1); // dot above
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
+          model.progress();
           stack.push(n);
         }
       }
@@ -147,6 +196,7 @@ public class GameController implements ActionListener {
         n = model.get(x,y+1); // dot below
         if((!n.isCaptured()) && n.equals(d)){
           n.setCaptured(true);
+          model.progress();
           stack.push(n);
         }
       }

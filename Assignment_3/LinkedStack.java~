@@ -1,0 +1,36 @@
+public class LinkedStack<E>  {
+    private Container<E> top = null;
+    
+    public boolean isEmpty(){
+        return top == null;
+    }
+    
+    
+    public E peek(){
+        return top.elem;
+    }
+    
+    
+    public E pop(){
+        E tmp = top.elem;
+        top = top.next;
+        return tmp;
+    }
+    
+    
+    public void push(E stuff){
+        top = new Container<E>(stuff,top);
+    }
+    
+    private static class Container<T>{
+        T elem;
+        Container<T> next;
+        private Container(T elem,Container<T> next){
+            this.elem = elem;
+            this.next = next;
+        }
+    }
+    public static void main(String [] args){
+        
+    }
+}

@@ -161,6 +161,7 @@ public class GameView extends JFrame {
             //shouldn't happen
         }
         
+        setLocationRelativeTo(null);
         setVisible(true);
     }
     
@@ -191,6 +192,34 @@ public class GameView extends JFrame {
     public void setRedoable(boolean b){
       redo.setEnabled(b);
     }
+    
+    /**
+     * creates a popup to enable options
+     */
+    public void displayOptions(){
+      JDialog d = new JDialog(this,"Options",true);
+      
+      JLabel tLabel = new JLabel("Play on Plane or Torus?");
+      JRadioButton plane = new JRadioButton("Plane");
+      JRadioButton torus = new JRadioButton("Torus");
+      
+      JLabel dLabel = new JLabel("    Diagonal moves?");
+      JRadioButton ortho = new JRadioButton("Orthogonal");
+      JRadioButton diagonal = new JRadioButton("Diagonal");
+      
+      d.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));
+      d.add(tLabel);
+      d.add(plane);
+      d.add(torus);
+      d.add(dLabel);
+      d.add(ortho);
+      d.add(diagonal);
+      
+      d.setLocationRelativeTo(undo);
+      d.pack();
+      d.show();
+    }
+    
     
     /**
      * creates a pop up dialogue when the user wins the game

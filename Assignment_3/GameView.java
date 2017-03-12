@@ -16,6 +16,11 @@ import javax.swing.*;
  */
 
 public class GameView extends JFrame {
+  
+     /**
+     * this panel will hold the options buttons on the top for the game
+     */
+    private JPanel controlPanel;
     
     /**
      * this panel will hold the size x size grid of dots
@@ -38,9 +43,9 @@ public class GameView extends JFrame {
     private JLabel stepsLabel;
     
     /**
-     * the reset and quit buttons
+     * the reset, quit, undo, redo, and options buttons
      */
-    private JButton reset, quit;
+    private JButton reset, quit, undo, redo, options;
     
     /**
      * the size of the buttons to be displayed
@@ -97,15 +102,37 @@ public class GameView extends JFrame {
         quit.setActionCommand("7");
         quit.addActionListener(controller);
         
+        undo = new JButton("undo");
+        undo.setPreferredSize(new Dimension(69,34));
+        undo.setActionCommand("8");
+        undo.setEnabled(false);
+        undo.addActionListener(controller);
+        
+        redo = new JButton("redo");
+        redo.setPreferredSize(new Dimension(69,34));
+        redo.setActionCommand("9");
+        redo.setEnabled(false);
+        redo.addActionListener(controller);
+        
+        options = new JButton("options");
+        options.setPreferredSize(new Dimension(69,34));
+        options.setActionCommand("10");
+        options.addActionListener(controller);
+        
+        controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,4,4));
+        controlPanel.add(undo);
+        controlPanel.add(redo);
+        controlPanel.add(options);
+        
         //holds color selectors, quit and reset buttons
         actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,4,4));
-        for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
-            DotButton dot = new DotButton(i,50);
-            dot.addActionListener(controller);
-            actionPanel.add(dot);
-        }
+        //for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
+        //    DotButton dot = new DotButton(i,50);
+        //    dot.addActionListener(controller);
+        //    actionPanel.add(dot);
+        //}
         
-        actionPanel.setPreferredSize(new Dimension(335,115));
+        actionPanel.setPreferredSize(new Dimension(335,80));
         actionPanel.add(stepsLabel);
         actionPanel.add(reset);
         actionPanel.add(quit);
@@ -120,10 +147,11 @@ public class GameView extends JFrame {
         }
         
         setLayout(new FlowLayout());
-        setSize(width+20,height+150);// have to make slightly bigger cus the size includes the borders
+        setSize(width+20,height+180);// have to make slightly bigger cus the size includes the borders
         setResizable(true);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);// USE THE QUIT BUTTON TO CLOSE
         
+        add(controlPanel);
         add(grid);
         add(actionPanel);
         
@@ -140,11 +168,25 @@ public class GameView extends JFrame {
     /**
      * update the status of the board's DotButton instances based on the current game model
      */
-    public void update(){
+    public void update(GameModel model){
         for (int i = 0; i < dots.length; i++){
             dots[i].setColor(model.getColor(i));
         }
         stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
+    }
+    
+    /**
+     * enables or disables the redo button
+     */
+    public void setUndoable(boolean b){
+      undo.setEnabled(b);
+    }
+    
+    /**
+     * enables or disables the redo button
+     */
+    public void setRedoable(boolean b){
+      redo.setEnabled(b);
     }
     
     /**
