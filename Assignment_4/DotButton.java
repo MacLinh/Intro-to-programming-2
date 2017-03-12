@@ -60,9 +60,14 @@ public class DotButton extends JButton {
     private int type;
     
     /**
-     * the current icon size of all buttons
+     * the number of the button
      */
-    private static int iconSize;
+    private int number;
+    
+    /**
+     * the total number of buttons
+     */
+    private static int total;
     
     /*
      * initializes the all the icon images
@@ -78,6 +83,7 @@ public class DotButton extends JButton {
         for(int i = 0; i < GameModel.NUMBER_OF_COLORS; i++){
             icons[2][i] = new ImageIcon("data/N/ball-"+i+".png");
         }
+        total = 0;
     }
     
     
@@ -129,6 +135,7 @@ public class DotButton extends JButton {
         setActionCommand(""+color);
         setIcon(icons[type][color]);
         setBackground(Color.white);
+        number = total++;
     }
     
     
@@ -161,7 +168,8 @@ public class DotButton extends JButton {
      */
     
     public int getRow() {
-        return 0; //unused
+        int size = (int) Math.sqrt(total);
+        return (int)number/size;
     }
     
     /**
@@ -171,7 +179,8 @@ public class DotButton extends JButton {
      */
     
     public int getColumn() {
-        return 0; //unused
+        int size = (int) Math.sqrt(total);
+        return number%size;
     }
     
 }

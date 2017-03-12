@@ -89,7 +89,7 @@ public class GameView extends JFrame {
         
         width = height = iconSize*model.getSize();
         
-        stepsLabel = new JLabel("Number of steps: 0");
+        stepsLabel = new JLabel("Select Initial Dot");
         stepsLabel.setPreferredSize(new Dimension(150,50));
         
         reset = new JButton("Reset");
@@ -172,7 +172,10 @@ public class GameView extends JFrame {
         for (int i = 0; i < dots.length; i++){
             dots[i].setColor(model.getColor(i));
         }
-        stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
+        if(model.getNumberOfSteps() != -1)
+          stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
+        else 
+          stepsLabel.setText("Select Initial Dot");
     }
     
     /**
@@ -208,7 +211,7 @@ public class GameView extends JFrame {
                                              options,
                                              options[0]);
         if (n == 0)
-            controller.reset();
+            controller.newGame();
         else
             System.exit(0);
     }

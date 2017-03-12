@@ -41,21 +41,26 @@ public class GameController implements ActionListener {
     model = new GameModel(size);
     view = new GameView(model,this);
     previousMoves = new LinkedStack<GameModel>();
-    reset();
+    newGame();
   }
   
   /**
-   * resets the game
+   * resets the game but may still be undone
    */
   public void reset(){
+    saveModel();
     model.reset();
-    DotInfo dotZero = model.get(0,0);
-    dotZero.setCaptured(true); // captures the top corner to start the game
-    model.progress();
-    model.setCurrentSelectedColor(dotZero.getColor());
-    flood(dotZero.getColor());
     view.update(model);
-    //model.save();
+    //System.out.println(GameModel.history.peek().getNumberOfSteps());
+  }
+  
+  /**
+   * resets without saving
+   */
+  public void newGame(){
+    model.reset();
+    view.update(model);
+    view.setUndoable(false);
   }
   
   /**
@@ -66,6 +71,30 @@ public class GameController implements ActionListener {
    */
   
   public void actionPerformed(ActionEvent e) {
+    //System.out.println(GameModel.history.peek().getNumberOfSteps());
+    if(model.getNumberOfSteps() == -1){ // new game
+      Object o = e.getSource();
+      int command = Integer.parseInt(e.getActionCommand());
+      if (o instanceof DotButton){
+        DotButton zero = (DotButton) o;
+        floodZero(zero.getColor(),zero.getColumn(),zero.getRow());
+        return;
+      }
+      else if (command == 6)
+        reset();
+      else if (command == 7)
+        view.showQuitDialogue();
+      else if (command == 8)
+        undo();
+      else if (command == 9)
+        redo();
+      else if (command == 10)
+        ;//showOptions();
+      else
+        throw new IllegalArgumentException("button does not exist");
+      return;
+    }
+    
     int command = Integer.parseInt(e.getActionCommand());
     if (command < 6)
       selectColor(command);
@@ -94,22 +123,23 @@ public class GameController implements ActionListener {
    *            the newly selected color
    */
   public void selectColor(int color){
+    System.out.println("select color");
     if(color == model.getCurrentSelectedColor()) // do nothing if misclick
       return;
     
+    saveModel();
+      
     view.setRedoable(false);
     previousMoves = new LinkedStack<GameModel>();
-    model.save();
-    view.setUndoable(true);
-    model = (GameModel)model.clone();
     model.setCurrentSelectedColor(color);  
     flood(color);
     model.step();
     view.update(model);
-    //model.save();
-   
-    if(model.isFinished())
+    
+    if(model.isFinished()) {
+      model.clearHistory();
       view.displayWin(model.getNumberOfSteps());
+    }
     
   }
   
@@ -118,7 +148,7 @@ public class GameController implements ActionListener {
    * undoes a move
    */
   private void undo(){
-    GameModel tmp = model.getHistory();
+    GameModel tmp = GameModel.getHistory();
     if(!model.hasHistory())
       view.setUndoable(false);
     previousMoves.push(model);
@@ -140,14 +170,41 @@ public class GameController implements ActionListener {
     view.update(model);
     view.setUndoable(true);
   }
+  
+  
+  /**
+   * saves a copy of the current model
+   */
+  private void saveModel(){
+    model.save();
+    model = (GameModel)model.clone();
+    view.setUndoable(true);
+  }
+  
+  
+  /**
+   * captures the first dot to start the game
+   * 
+   * @param color the color to be flooded
+   */
+  private void floodZero(int color, int x, int y){
+    saveModel();
+    
+    DotInfo dotZero = model.get(x,y);
+    dotZero.setCaptured(true); // captures the top corner to start the game
+    model.progress();
+    model.step();
+    model.setCurrentSelectedColor(dotZero.getColor());
+    flood(dotZero.getColor());
+    view.update(model);
+  }
+  
   /**
    * floods the board based on the selected color
    * 
    * @param color the color to be flooded
    */
   private void flood(int color){
-    
-    //an implementation of a stack
     LinkedStack<DotInfo> stack = new LinkedStack<DotInfo>(),n = new LinkedStack<DotInfo>();
     
     for(DotInfo dot : model.getDots()){
