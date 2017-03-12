@@ -4,6 +4,7 @@
 // Assignment: 2
 
 import java.util.Random;
+import java.io.*;
 
 /**
  * The class <b>GameModel</b> holds the model, the state of the systems. 
@@ -20,7 +21,7 @@ import java.util.Random;
  *
  * @author Guy-Vincent Jourdan, University of Ottawa
  */
-public class GameModel {
+public class GameModel implements Serializable, Cloneable{
     
     /**
      * predefined values to capture the color of a DotInfo
@@ -49,6 +50,11 @@ public class GameModel {
      */
     private int steps = -1;
     
+     /**
+     * number of captured dots; when value reaches the number of total dots, the game is over
+     */
+    private int numCaptured = 0;
+    
     /**
      * the current color selected by the player
      */
@@ -58,7 +64,15 @@ public class GameModel {
      */
     private static Random random;
     
+    /**
+     * stores the history of GameModels for the undo feature
+     */
+    private static LinkedStack<GameModel> history;
     
+    static{
+      random = new Random();
+      history = new LinkedStack<GameModel>();
+    }
     /**
      * Constructor to initialize the model to a given size of board.
      * 
@@ -68,10 +82,7 @@ public class GameModel {
     public GameModel(int size) {
         this.size = size;
         dots = new DotInfo[size*size];
-        if(random == null) 
-            random = new Random();
         reset();
-        
     }
     
     
@@ -80,7 +91,7 @@ public class GameModel {
      * is cleared up . 
      */
     public void reset(){
-        DotInfo.setNumberCaptured(0);
+        numCaptured = 0;
         steps = 0;
         for(int i = 0; i < size*size; i++){
             dots[i] = new DotInfo(i%size,(int)i/size,random.nextInt(NUMBER_OF_COLORS));
@@ -215,6 +226,12 @@ public class GameModel {
         steps++;
     }
     
+    /**
+     * when a new dot is captured this is tallied to keep track of victory
+     */
+    public void progress(){
+      numCaptured++;
+    }
     
     /**
      * The metod <b>isFinished</b> returns true iff the game is finished, that
@@ -223,7 +240,7 @@ public class GameModel {
      * @return true if the game is finished, false otherwise
      */
     public boolean isFinished(){
-        return DotInfo.getNumberCaptured() == size*size;
+        return numCaptured == size*size;
     }
     
     /**
@@ -236,7 +253,46 @@ public class GameModel {
             return DotButton.MEDIUM_SIZE;
         return DotButton.SMALL_SIZE;
     }
+    /**
+     * returns the stack of history
+     */
+    public static GameModel getHistory(){
+      return (GameModel)history.pop();
+    }
     
+    public void save(){
+      history.push(this);
+    }
+    public void save(GameModel m){
+      history.push(m);
+    }
+    
+    public boolean hasHistory(){
+      return !history.isEmpty();
+    }
+    /**
+     * returns a copy of this model
+     */
+    @Override
+    public Object clone(){
+      //history.push(this);
+      //System.out.println(this);
+      try {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(this);
+        
+        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(bais);
+        return ois.readObject();
+      } catch (IOException e) {
+        System.out.println(e);
+        return null;
+      } catch (ClassNotFoundException e) {
+        System.out.println(e);
+        return null;
+      }
+    }
     /**
      * Builds a String representation of the model
      *

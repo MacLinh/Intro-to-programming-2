@@ -51,6 +51,7 @@ public class GameController implements ActionListener {
     model.reset();
     DotInfo dotZero = model.get(0,0);
     dotZero.setCaptured(true); // captures the top corner to start the game
+    model.progress();
     model.setCurrentSelectedColor(dotZero.getColor());
     flood(dotZero.getColor());
     view.update(model);
@@ -108,7 +109,7 @@ public class GameController implements ActionListener {
     //model.save();
    
     if(model.isFinished())
-      view.displayWin();
+      view.displayWin(model.getNumberOfSteps());
     
   }
   
@@ -147,7 +148,7 @@ public class GameController implements ActionListener {
   private void flood(int color){
     
     //an implementation of a stack
-    ArrayStack stack = new ArrayStack();
+    LinkedStack<DotInfo> stack = new LinkedStack<DotInfo>(),n = new LinkedStack<DotInfo>();
     
     for(DotInfo dot : model.getDots()){
       if(dot.isCaptured()){
@@ -157,47 +158,14 @@ public class GameController implements ActionListener {
     }
     
     do{
-      DotInfo d = stack.pop(), n;
-      int x = d.getX(), y = d.getY(), size = model.getSize();
-      
-      /*      [y-1]
-       * [x-1][ d ][x+1]
-       *      [y+1]
-       */
-      
-      if(x > 0){ // can't check a dot not on the grid
-        n = model.get(x-1,y); // dot to the left
-        if((!n.isCaptured()) && n.equals(d)){
-          n.setCaptured(true);
+      DotInfo d1 = stack.pop();
+      n = model.getNeighbors(d1);
+      while(!n.isEmpty()){
+        DotInfo d2 = n.pop();
+        if(!d2.isCaptured() && d1.equals(d2)){
+          d2.setCaptured(true);
           model.progress();
-          stack.push(n);
-        }
-      }
-      
-      if(x < size-1){ 
-        n = model.get(x+1,y); // dot to the right
-        if((!n.isCaptured()) && n.equals(d)){
-          n.setCaptured(true);
-          model.progress();
-          stack.push(n);
-        }
-      }
-      
-      if(y > 0){ 
-        n = model.get(x,y-1); // dot above
-        if((!n.isCaptured()) && n.equals(d)){
-          n.setCaptured(true);
-          model.progress();
-          stack.push(n);
-        }
-      }
-      
-      if(y < size-1){ 
-        n = model.get(x,y+1); // dot below
-        if((!n.isCaptured()) && n.equals(d)){
-          n.setCaptured(true);
-          model.progress();
-          stack.push(n);
+          stack.push(d2);
         }
       }
     }while(!stack.isEmpty());

@@ -69,9 +69,19 @@ public class GameModel implements Serializable, Cloneable{
      */
     private static LinkedStack<GameModel> history;
     
+    /**
+     * playing on (plane or torus) or (orthogonal or diagonal)
+     */
+    private static boolean isTorus, isDiagonal;
+    
+    /*
+     * initializes static fields
+     */
     static{
       random = new Random();
       history = new LinkedStack<GameModel>();
+      isTorus = true;
+      isDiagonal = false;
     }
     /**
      * Constructor to initialize the model to a given size of board.
@@ -270,6 +280,36 @@ public class GameModel implements Serializable, Cloneable{
     public boolean hasHistory(){
       return !history.isEmpty();
     }
+    
+    /**
+     * returns all neighboring dots at coordinates
+     * 
+     * @param x the x coordinate to search
+     * @param y the y coordinate to search
+     * 
+     * @return returns a stack with all the dots neighboring
+     */
+    public LinkedStack<DotInfo> getNeighbors(int x, int y){
+      LinkedStack<DotInfo> t = new LinkedStack<DotInfo>();
+      if(x > 0) t.push(get(x-1,y));
+      else if (isTorus) t.push(get(size-1,y));
+        
+      if(x<size-1)  t.push(get(x+1,y));
+      else if (isTorus) t.push(get(0,y));
+      
+      if(y > 0) t.push(get(x,y-1));
+      else if (isTorus) t.push(get(x,size-1));
+        
+      if(y<size-1)  t.push(get(x,y+1));
+      else if (isTorus) t.push(get(x,0));
+      
+      
+      return t;
+    }
+    public LinkedStack<DotInfo> getNeighbors(DotInfo d){
+      return getNeighbors(d.getX(),d.getY());
+    }
+    
     /**
      * returns a copy of this model
      */

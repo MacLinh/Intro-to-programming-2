@@ -192,7 +192,7 @@ public class GameView extends JFrame {
     /**
      * creates a pop up dialogue when the user wins the game
      */
-    public void displayWin(){
+    public void displayWin(int steps){
         try{
             Thread.sleep(100);
         }catch(InterruptedException e){
@@ -200,7 +200,7 @@ public class GameView extends JFrame {
         Object[] options = {"play again",
             "exit"};
         int n = JOptionPane.showOptionDialog(this,
-                                             "You won in "+model.getNumberOfSteps()+" steps!\nWould you like to go again?",
+                                             "You won in "+steps+" steps!\nWould you like to go again?",
                                              "You Win!",
                                              JOptionPane.YES_NO_OPTION,
                                              JOptionPane.QUESTION_MESSAGE,
