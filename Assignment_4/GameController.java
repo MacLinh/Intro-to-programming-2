@@ -40,8 +40,8 @@ public class GameController implements ActionListener {
   public GameController(int size) {
     model = new GameModel(size);
     view = new GameView(model,this);
-    previousMoves = new LinkedStack<GameModel>();
     newGame();
+    view.setUndoable(false);
   }
   
   /**
@@ -49,10 +49,7 @@ public class GameController implements ActionListener {
    */
   public void reset(){
     saveModel();
-    model.reset();
-    view.update(model);
-    view.setRedoable(false);
-    //System.out.println(GameModel.history.peek().getNumberOfSteps());
+    newGame();
   }
   
   /**
@@ -61,7 +58,8 @@ public class GameController implements ActionListener {
   public void newGame(){
     model.reset();
     view.update(model);
-    view.setUndoable(false);
+    view.setRedoable(false);
+    previousMoves = new LinkedStack<GameModel>();
   }
   
   /**
