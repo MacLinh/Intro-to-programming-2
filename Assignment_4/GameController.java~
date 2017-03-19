@@ -40,8 +40,8 @@ public class GameController implements ActionListener {
   public GameController(int size) {
     model = new GameModel(size);
     view = new GameView(model,this);
-    previousMoves = new LinkedStack<GameModel>();
     newGame();
+    view.setUndoable(false);
   }
   
   /**
@@ -49,9 +49,7 @@ public class GameController implements ActionListener {
    */
   public void reset(){
     saveModel();
-    model.reset();
-    view.update(model);
-    //System.out.println(GameModel.history.peek().getNumberOfSteps());
+    newGame();
   }
   
   /**
@@ -60,7 +58,8 @@ public class GameController implements ActionListener {
   public void newGame(){
     model.reset();
     view.update(model);
-    view.setUndoable(false);
+    view.setRedoable(false);
+    previousMoves = new LinkedStack<GameModel>();
   }
   
   /**
@@ -89,7 +88,7 @@ public class GameController implements ActionListener {
       else if (command == 9)
         redo();
       else if (command == 10)
-        view.displayOptions();
+        view.displayOptions(model);
       else
         throw new IllegalArgumentException("button does not exist");
       return;
@@ -107,7 +106,7 @@ public class GameController implements ActionListener {
     else if (command == 9)
       redo();
     else if (command == 10)
-      ;//showOptions();
+      System.out.println(view.displayOptions(model));
     else
       throw new IllegalArgumentException("button does not exist");
     
@@ -155,6 +154,7 @@ public class GameController implements ActionListener {
     view.setRedoable(true);
     model = tmp;
     view.update(model);
+    
   }
   
   /**
@@ -162,13 +162,12 @@ public class GameController implements ActionListener {
    * precondition: previousMoves must not be empty
    */
   private void redo(){
+    saveModel();
     GameModel tmp = previousMoves.pop();
     if(previousMoves.isEmpty())
       view.setRedoable(false);
-    model.save();
     model = tmp;
     view.update(model);
-    view.setUndoable(true);
   }
   
   

@@ -225,7 +225,10 @@ public class GameView extends JFrame {
       d.add(ortho);
       d.add(diagonal);
       
-      d.setLocationRelativeTo(this);
+      Point p = getLocation();
+      Point mid = new Point((int)p.getX(),(int)p.getY()+100);
+      d.setLocation(mid);
+      //d.setLocationRelativeTo(this);
       d.pack();
       d.setVisible(true);
       
