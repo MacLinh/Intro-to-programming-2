@@ -195,17 +195,27 @@ public class GameView extends JFrame {
     
     /**
      * creates a popup to enable options
+     * 
+     * @ return returns 1 if torus is changed, 2 if diagonal and 3 if both, and 0 if unchanged
      */
-    public void displayOptions(){
+    public int displayOptions(GameModel model){
       JDialog d = new JDialog(this,"Options",true);
       
       JLabel tLabel = new JLabel("Play on Plane or Torus?");
-      JRadioButton plane = new JRadioButton("Plane");
-      JRadioButton torus = new JRadioButton("Torus");
+      JRadioButton plane = new JRadioButton("Plane",!model.isTorus());
+      JRadioButton torus = new JRadioButton("Torus",model.isTorus());
       
       JLabel dLabel = new JLabel("    Diagonal moves?");
-      JRadioButton ortho = new JRadioButton("Orthogonal");
-      JRadioButton diagonal = new JRadioButton("Diagonal");
+      JRadioButton ortho = new JRadioButton("Orthogonal",!model.isDiagonal());
+      JRadioButton diagonal = new JRadioButton("Diagonal",model.isDiagonal());
+      
+      ButtonGroup tGroup = new ButtonGroup();
+      tGroup.add(plane);
+      tGroup.add(torus);
+      
+      ButtonGroup dGroup = new ButtonGroup();
+      dGroup.add(ortho);
+      dGroup.add(diagonal);
       
       d.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));
       d.add(tLabel);
@@ -215,9 +225,16 @@ public class GameView extends JFrame {
       d.add(ortho);
       d.add(diagonal);
       
-      d.setLocationRelativeTo(undo);
+      d.setLocationRelativeTo(this);
       d.pack();
-      d.show();
+      d.setVisible(true);
+      
+      int n = 0;
+      if (model.isDiagonal() != diagonal.isSelected()) 
+          n += 2;
+      if(model.isTorus() != torus.isSelected())
+          n += 1;
+      return n;
     }
     
     

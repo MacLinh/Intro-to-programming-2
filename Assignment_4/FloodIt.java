@@ -28,7 +28,7 @@ public class FloodIt {
             System.out.println("error loading look and feel, default used");
         }
         
-        StudentInfo.display();
+        //StudentInfo.display();
         int size = 12;
         if (args.length == 1){
             try{

@@ -92,7 +92,7 @@ public class GameModel implements Serializable, Cloneable{
     dots = new DotInfo[size*size];
     steps = -1;
     System.out.println("steps =" + steps);
-    isTorus = true;
+    isTorus = false;
     isDiagonal = false;
     reset();
   }
@@ -208,7 +208,13 @@ public class GameModel implements Serializable, Cloneable{
     return selectedColor;
   }
   
+  public boolean isTorus(){
+      return isTorus;
+  }
   
+  public boolean isDiagonal(){
+      return isDiagonal;
+  }
   /**
    * Getter method for the model's dotInfo reference
    * at location (i,j)
@@ -236,6 +242,8 @@ public class GameModel implements Serializable, Cloneable{
    */
   public void step(){
     steps++;
+    //if (steps >= 9)
+      //  steps = 9;
   }
   
   /**

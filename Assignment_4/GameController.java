@@ -51,6 +51,7 @@ public class GameController implements ActionListener {
     saveModel();
     model.reset();
     view.update(model);
+    view.setRedoable(false);
     //System.out.println(GameModel.history.peek().getNumberOfSteps());
   }
   
@@ -89,7 +90,7 @@ public class GameController implements ActionListener {
       else if (command == 9)
         redo();
       else if (command == 10)
-        view.displayOptions();
+        view.displayOptions(model);
       else
         throw new IllegalArgumentException("button does not exist");
       return;
@@ -107,7 +108,7 @@ public class GameController implements ActionListener {
     else if (command == 9)
       redo();
     else if (command == 10)
-      ;//showOptions();
+      System.out.println(view.displayOptions(model));
     else
       throw new IllegalArgumentException("button does not exist");
     
@@ -155,6 +156,7 @@ public class GameController implements ActionListener {
     view.setRedoable(true);
     model = tmp;
     view.update(model);
+    
   }
   
   /**
@@ -162,13 +164,12 @@ public class GameController implements ActionListener {
    * precondition: previousMoves must not be empty
    */
   private void redo(){
+    saveModel();
     GameModel tmp = previousMoves.pop();
     if(previousMoves.isEmpty())
       view.setRedoable(false);
-    model.save();
     model = tmp;
     view.update(model);
-    view.setUndoable(true);
   }
   
   
