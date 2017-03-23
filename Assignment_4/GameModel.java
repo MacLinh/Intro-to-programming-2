@@ -44,7 +44,7 @@ public class GameModel implements Serializable, Cloneable{
      */
     private DotInfo[] dots;
     
-    
+    public LinkedStack<GameModel> holder = null;
     /**
      * the number of steps taken so far by the player
      */
@@ -67,7 +67,7 @@ public class GameModel implements Serializable, Cloneable{
     /**
      * stores the history of GameModels for the undo feature
      */
-    private static LinkedStack<GameModel> history;
+    public static LinkedStack<GameModel> history;
     
     /**
      * playing on (plane or torus) or (orthogonal or diagonal)
@@ -332,6 +332,11 @@ public class GameModel implements Serializable, Cloneable{
         return getNeighbors(d.getX(),d.getY());
     }
     
+    /**
+     * sets the options 
+     * 
+     * @param n a value of 1 will modify torus and 2 will modify diagonal. valid arguments: 1,2, and 3
+     */
     public void setOptions(int n){
         if ((n & 1) != 0)
             isTorus = !isTorus;

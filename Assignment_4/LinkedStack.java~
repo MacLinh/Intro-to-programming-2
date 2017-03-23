@@ -1,36 +1,50 @@
 public class LinkedStack<E>  {
-    private Container<E> top = null;
-    
-    public boolean isEmpty(){
-        return top == null;
+  private Elem<E> top = null;
+  
+  public boolean isEmpty(){
+    return top == null;
+  }
+  
+  
+  public E peek(){
+    if(isEmpty())
+      throw new EmptyStackException();
+    return top.elem;
+  }
+  
+  
+  public E pop(){
+    if(isEmpty())
+      throw new EmptyStackException();
+    E tmp = top.elem;
+    top = top.next;
+    return tmp;
+  }
+  
+  
+  public void push(E stuff){
+    if(stuff == null)
+      throw new IllegalArgumentException("Cannot push null pointer to stack");
+    top = new Elem<E>(stuff,top);
+  }
+  
+  private static class Elem<T>{
+    T elem;
+    Elem<T> next;
+    private Elem(T elem,Elem<T> next){
+      this.elem = elem;
+      this.next = next;
     }
-    
-    
-    public E peek(){
-        return top.elem;
+  }
+  private static class EmptyStackException extends RuntimeException{
+    EmptyStackException(){
+      this("Stack is Empty");
     }
-    
-    
-    public E pop(){
-        E tmp = top.elem;
-        top = top.next;
-        return tmp;
+    EmptyStackException(String s){
+      super(s);
     }
+  }
+  public static void main(String [] args){
     
-    
-    public void push(E stuff){
-        top = new Container<E>(stuff,top);
-    }
-    
-    private static class Container<T>{
-        T elem;
-        Container<T> next;
-        private Container(T elem,Container<T> next){
-            this.elem = elem;
-            this.next = next;
-        }
-    }
-    public static void main(String [] args){
-        
-    }
+  }
 }

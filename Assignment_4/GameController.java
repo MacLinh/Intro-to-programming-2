@@ -5,6 +5,7 @@
 
 import java.awt.event.*;
 import java.io.*;
+
 /**
  * The class <b>GameController</b> is the controller of the game. It has a method
  * <b>selectColor</b> which is called by the view when the player selects the next
@@ -39,9 +40,22 @@ public class GameController implements ActionListener {
      *            the size of the board on which the game will be played
      */
     public GameController(int size) {
-        model = new GameModel(size);
-        view = new GameView(model,this);
-        newGame();
+        try {
+            FileInputStream fileIn = new FileInputStream("savedGame.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            model = (GameModel) in.readObject();
+            GameModel.history = model.holder;
+            in.close();
+            fileIn.close();
+        }catch(Exception e) {
+            System.out.println("no saved model found");
+            model = new GameModel(size);
+            view = new GameView(model,this);
+            newGame();
+        }
+        if (view == null)
+            view = new GameView(model,this);
+        view.update(model);
     }
     
     /**
@@ -145,7 +159,7 @@ public class GameController implements ActionListener {
      * undoes a move
      */
     private void undo(){
-        GameModel tmp = GameModel.getHistory();
+        GameModel tmp = model.getHistory();
         if(!model.hasHistory())
             view.setUndoable(false);
         previousMoves.push(model);
@@ -179,6 +193,19 @@ public class GameController implements ActionListener {
     }
     
     private void saveAndExit(){
+        System.out.println("exiting");
+        try {
+            FileOutputStream fileOut =
+                new FileOutputStream("savedGame.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            model.holder = GameModel.history;
+            out.writeObject(model);
+            out.close();
+            fileOut.close();
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+      
         System.exit(0);
     }
     /**
