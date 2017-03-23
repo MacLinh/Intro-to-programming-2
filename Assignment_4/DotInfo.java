@@ -12,7 +12,7 @@
 
 import java.io.*;
 
-public class DotInfo implements Serializable{
+public class DotInfo implements Cloneable, Serializable{
     
     /**
      * the x and y coordinate of the dot
@@ -112,5 +112,14 @@ public class DotInfo implements Serializable{
             return false;
         DotInfo other = (DotInfo) ref;
         return color == other.getColor();
+    }
+    
+    @Override
+    public Object clone(){
+        try{
+        return super.clone();
+        }catch(Exception e){
+            return null;
+        }
     }
 }

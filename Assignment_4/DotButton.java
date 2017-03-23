@@ -37,12 +37,12 @@ public class DotButton extends JButton {
     /**
      * the medium sized icon
      */
-    public static final int MEDIUM_SIZE = 38;
+    public static final int MEDIUM_SIZE = 30;
     
     /**
      * the largest sized icon
      */
-    public static final int NORMAL_SIZE = 50;
+    public static final int NORMAL_SIZE = 40;
     
     /**
      * the different icons available
@@ -117,7 +117,7 @@ public class DotButton extends JButton {
     public DotButton(int color, int iconSize) {
         this.color = color;
         setPreferredSize(new Dimension(iconSize,iconSize));
-        
+        setBorder(BorderFactory.createEmptyBorder());
         switch(iconSize){
             case SMALL_SIZE :
                 type = 0;
@@ -134,7 +134,7 @@ public class DotButton extends JButton {
         }
         setActionCommand(""+color);
         setIcon(icons[type][color]);
-        setBackground(Color.white);
+        setBackground(Color.black);
         number = total++;
     }
     

@@ -140,6 +140,7 @@ public class GameView extends JFrame {
         //holds the grid of dots
         grid = new JPanel(new GridLayout(model.getSize(),model.getSize()));
         grid.setPreferredSize(new Dimension(width,height));
+        grid.setBackground(Color.black);
         for (int i = 0; i < dots.length; i++){
             dots[i] = new DotButton(model.getColor(i),iconSize);
             dots[i].addActionListener(controller);
@@ -202,7 +203,7 @@ public class GameView extends JFrame {
       JDialog d = new JDialog(this,"Options",true);
       
       JLabel tLabel = new JLabel("Play on Plane or Torus?");
-      JRadioButton plane = new JRadioButton("Plane",!model.isTorus());
+      JRadioButton plane = new JRadioButton("Plane   ",!model.isTorus());
       JRadioButton torus = new JRadioButton("Torus",model.isTorus());
       
       JLabel dLabel = new JLabel("    Diagonal moves?");
@@ -225,11 +226,11 @@ public class GameView extends JFrame {
       d.add(ortho);
       d.add(diagonal);
       
-      Point p = getLocation();
-      Point mid = new Point((int)p.getX(),(int)p.getY()+100);
-      d.setLocation(mid);
-      //d.setLocationRelativeTo(this);
-      d.pack();
+      //Point p = getLocation();
+      //Point mid = new Point((int)p.getX(),(int)p.getY()+100);
+      //d.setLocationRelativeTo(mid);
+      d.setLocationRelativeTo(undo);
+      d.setSize(150,200);
       d.setVisible(true);
       
       int n = 0;
@@ -244,7 +245,7 @@ public class GameView extends JFrame {
     /**
      * creates a pop up dialogue when the user wins the game
      */
-    public void displayWin(int steps){
+    public boolean displayWin(int steps){
         try{
             Thread.sleep(100);
         }catch(InterruptedException e){
@@ -259,13 +260,10 @@ public class GameView extends JFrame {
                                              DotButton.icons[2][model.getCurrentSelectedColor()],     
                                              options,
                                              options[0]);
-        if (n == 0)
-            controller.newGame();
-        else
-            System.exit(0);
+        return n == 1;
     }
     
-    public void showQuitDialogue(){
+    public boolean showQuitDialogue(){
         Object[] options = {"Cancel",
             "Exit"};
         int n = JOptionPane.showOptionDialog(this,
@@ -276,9 +274,7 @@ public class GameView extends JFrame {
                                              DotButton.icons[2][model.getCurrentSelectedColor()],     
                                              options,
                                              options[0]);
-        if (n == 0);
-        else
-            System.exit(0);
+        return n == 1;
     }
     
 }
