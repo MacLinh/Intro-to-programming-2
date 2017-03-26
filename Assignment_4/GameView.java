@@ -62,6 +62,10 @@ public class GameView extends JFrame {
      */
     private GameController controller;
     
+    /**
+     * DW about it. the answer to every question in the universe
+     */
+    public static final long serialVersionUID = 42L;
     
     /**
      * Constructor used for initializing the Frame

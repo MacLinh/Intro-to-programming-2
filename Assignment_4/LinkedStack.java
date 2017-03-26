@@ -1,4 +1,12 @@
 public class LinkedStack<E> implements java.io.Serializable {
+  /**
+   * DW about it. the answer to every question in the universe
+   */
+  public static final long serialVersionUID = 42L;
+  
+  /**
+   * the top of the stack
+   */
   private Elem<E> top = null;
   
   public boolean isEmpty(){
@@ -31,12 +39,24 @@ public class LinkedStack<E> implements java.io.Serializable {
   private static class Elem<T> implements java.io.Serializable{
     T elem;
     Elem<T> next;
+    
+    /**
+     * DW about it. the answer to every question in the universe
+     */
+    static final long serialVersionUID = 42L;
+    
     private Elem(T elem,Elem<T> next){
       this.elem = elem;
       this.next = next;
     }
   }
   private static class EmptyStackException extends RuntimeException {
+    
+    /**
+     * DW about it. the answer to every question in the universe
+     */
+    public static final long serialVersionUID = 42L;
+    
     EmptyStackException(){
       this("Stack is Empty");
     }

@@ -69,6 +69,11 @@ public class DotButton extends JButton {
      */
     private static int total;
     
+    /**
+     * DW about it. the answer to every question in the universe
+     */
+    public static final long serialVersionUID = 42L;
+    
     /*
      * initializes the all the icon images
      */

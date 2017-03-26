@@ -29,6 +29,10 @@ public class DotInfo implements Cloneable, Serializable{
      */
     private boolean captured;
     
+    /**
+     * DW about it. the answer to every question in the universe
+     */
+    public static final long serialVersionUID = 42L;
     
     /**
      * Constructor 

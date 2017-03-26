@@ -74,6 +74,11 @@ public class GameModel implements Serializable, Cloneable{
      */
     private boolean isTorus, isDiagonal;
     
+    /**
+     * DW about it. the answer to every question in the universe
+     */
+    public static final long serialVersionUID = 42L;
+    
     /*
      * initializes static fields
      */

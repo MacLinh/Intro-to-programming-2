@@ -1,4 +1,4 @@
-public class LinkedStack<E>  {
+public class LinkedStack<E> implements java.io.Serializable {
   private Elem<E> top = null;
   
   public boolean isEmpty(){
@@ -28,7 +28,7 @@ public class LinkedStack<E>  {
     top = new Elem<E>(stuff,top);
   }
   
-  private static class Elem<T>{
+  private static class Elem<T> implements java.io.Serializable{
     T elem;
     Elem<T> next;
     private Elem(T elem,Elem<T> next){
@@ -36,7 +36,7 @@ public class LinkedStack<E>  {
       this.next = next;
     }
   }
-  private static class EmptyStackException extends RuntimeException{
+  private static class EmptyStackException extends RuntimeException {
     EmptyStackException(){
       this("Stack is Empty");
     }
