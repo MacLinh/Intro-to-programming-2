@@ -28,11 +28,6 @@ public class GameController implements ActionListener {
     private GameView view;
     
     /**
-     * used to hold redoable actions
-     */
-    private LinkedStack<GameModel> previousMoves;
-    
-    /**
      * Constructor used for initializing the controller. It creates the game's view 
      * and the game's model instances
      * 
@@ -44,11 +39,10 @@ public class GameController implements ActionListener {
             FileInputStream fileIn = new FileInputStream("savedGame.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             model = (GameModel) in.readObject();
-            GameModel.history = model.holder;
             in.close();
             fileIn.close();
         }catch(Exception e) {
-            System.out.println("no saved model found");
+            System.out.println("No saved model found. New Game started");
             model = new GameModel(size);
             view = new GameView(model,this);
             newGame();
@@ -62,9 +56,9 @@ public class GameController implements ActionListener {
      * resets the game but may still be undone
      */
     public void reset(){
-        saveModel();
-        newGame();
-        view.setUndoable(true);
+      model.clearFuture();
+      saveModel();
+      newGame();
     }
     
     /**
@@ -72,10 +66,7 @@ public class GameController implements ActionListener {
      */
     public void newGame(){
         model.reset();
-        view.setUndoable(false);
         view.update(model);
-        view.setRedoable(false);
-        previousMoves = new LinkedStack<GameModel>();
     }
     
     /**
@@ -113,7 +104,9 @@ public class GameController implements ActionListener {
             int n = view.displayOptions(model);
             if (n != 0) {
                 saveModel();
+                model.clearFuture();
                 model.setOptions(n);
+                view.update(model);
             }
         }
         else
@@ -131,14 +124,12 @@ public class GameController implements ActionListener {
      *            the newly selected color
      */
     public void selectColor(int color){
-        System.out.println("select color");
         if(color == model.getCurrentSelectedColor()) // do nothing if misclick
             return;
         
         saveModel();
         
-        view.setRedoable(false);
-        previousMoves = new LinkedStack<GameModel>();
+        model.clearFuture();
         model.setCurrentSelectedColor(color);  
         flood(color);
         model.step();
@@ -159,14 +150,10 @@ public class GameController implements ActionListener {
      * undoes a move
      */
     private void undo(){
-        GameModel tmp = model.getHistory();
-        if(!model.hasHistory())
-            view.setUndoable(false);
-        previousMoves.push(model);
-        view.setRedoable(true);
-        model = tmp;
-        view.update(model);
-        
+      GameModel tmp = model;
+      model = model.getHistory().pop();
+      model.getFuture().push(tmp);
+      view.update(model);
     }
     
     /**
@@ -175,10 +162,7 @@ public class GameController implements ActionListener {
      */
     private void redo(){
         saveModel();
-        GameModel tmp = previousMoves.pop();
-        if(previousMoves.isEmpty())
-            view.setRedoable(false);
-        model = tmp;
+        model = model.getFuture().pop();
         view.update(model);
     }
     
@@ -187,9 +171,7 @@ public class GameController implements ActionListener {
      * saves a copy of the current model
      */
     private void saveModel(){
-        model.save();
-        model = (GameModel)model.clone();
-        view.setUndoable(true);
+        model.getHistory().push((GameModel)model.clone());
     }
     
     private void saveAndExit(){
@@ -198,7 +180,6 @@ public class GameController implements ActionListener {
             FileOutputStream fileOut =
                 new FileOutputStream("savedGame.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            model.holder = GameModel.history;
             out.writeObject(model);
             out.close();
             fileOut.close();
@@ -216,9 +197,7 @@ public class GameController implements ActionListener {
     private void floodZero(int color, int x, int y){
         saveModel();
         
-        view.setRedoable(false);
-        previousMoves = new LinkedStack<GameModel>();
-        
+        model.clearFuture();
         DotInfo dotZero = model.get(x,y);
         dotZero.setCaptured(true); // captures the top corner to start the game
         model.progress();
@@ -234,7 +213,9 @@ public class GameController implements ActionListener {
      * @param color the color to be flooded
      */
     private void flood(int color){
-        LinkedStack<DotInfo> stack = new LinkedStack<DotInfo>(),n = new LinkedStack<DotInfo>();
+        LinkedStack<DotInfo> 
+          stack = new LinkedStack<DotInfo>(), // the stack of captured dots
+          n = new LinkedStack<DotInfo>(); // the stack of neighboring dots
         
         for(DotInfo dot : model.getDots()){
             if(dot.isCaptured()){

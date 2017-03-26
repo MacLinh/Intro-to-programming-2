@@ -178,21 +178,11 @@ public class GameView extends JFrame {
           stepsLabel.setText("Number of Steps: " + model.getNumberOfSteps());
         else 
           stepsLabel.setText("Select Initial Dot");
+        
+        redo.setEnabled(model.hasFuture());
+        undo.setEnabled(model.hasHistory());
     }
     
-    /**
-     * enables or disables the redo button
-     */
-    public void setUndoable(boolean b){
-      undo.setEnabled(b);
-    }
-    
-    /**
-     * enables or disables the redo button
-     */
-    public void setRedoable(boolean b){
-      redo.setEnabled(b);
-    }
     
     /**
      * creates a popup to enable options

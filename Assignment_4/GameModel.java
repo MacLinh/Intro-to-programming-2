@@ -65,9 +65,9 @@ public class GameModel implements Serializable, Cloneable{
     private static Random random;
     
     /**
-     * stores the history of GameModels for the undo feature
+     * stores the history and future of GameModels for the undo and redo features
      */
-    public static LinkedStack<GameModel> history;
+    private LinkedStack<GameModel> history, future;
     
     /**
      * playing on (plane or torus) or (orthogonal or diagonal)
@@ -79,7 +79,6 @@ public class GameModel implements Serializable, Cloneable{
      */
     static{
         random = new Random();
-        history = new LinkedStack<GameModel>();
     }
     /**
      * Constructor to initialize the model to a given size of board.
@@ -91,9 +90,10 @@ public class GameModel implements Serializable, Cloneable{
         this.size = size;
         dots = new DotInfo[size*size];
         steps = -1;
-        System.out.println("steps =" + steps);
         isTorus = false;
         isDiagonal = false;
+        history = new LinkedStack<GameModel>();
+        future = new LinkedStack<GameModel>();
         reset();
     }
     
@@ -276,23 +276,26 @@ public class GameModel implements Serializable, Cloneable{
     /**
      * returns the stack of history
      */
-    public static GameModel getHistory(){
-        return (GameModel)history.pop();
+    public LinkedStack<GameModel> getHistory(){
+        return history;
     }
     
-    public void save(){
-        history.push(this);
+    public LinkedStack<GameModel> getFuture(){
+      return future;
     }
-    public void save(GameModel m){
-        history.push(m);
-    }
-    
     public boolean hasHistory(){
         return !history.isEmpty();
+    }
+    public boolean hasFuture(){
+        return !future.isEmpty();
     }
     
     public void clearHistory(){
         history = new LinkedStack<GameModel>();
+    }
+    
+    public void clearFuture(){
+        future = new LinkedStack<GameModel>();
     }
     
     /**
@@ -348,22 +351,6 @@ public class GameModel implements Serializable, Cloneable{
      */
     @Override
     public Object clone(){
-        /*
-         try {
-         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-         ObjectOutputStream oos = new ObjectOutputStream(baos);
-         oos.writeObject(this);
-         
-         ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-         ObjectInputStream ois = new ObjectInputStream(bais);
-         return ois.readObject();
-         } catch (IOException e) {
-         System.out.println(e);
-         return null;
-         } catch (ClassNotFoundException e) {
-         System.out.println(e);
-         return null;
-         }*/
         Object copy = null;
         try{
             copy = super.clone();
