@@ -172,7 +172,7 @@ public class GameView extends JFrame {
     
     
     /**
-     * update the status of the board's DotButton instances based on the current game model
+     * updates the status of the board's DotButton instances based on the current game model
      */
     public void update(GameModel model){
         for (int i = 0; i < dots.length; i++){
@@ -185,6 +185,7 @@ public class GameView extends JFrame {
         
         redo.setEnabled(model.hasFuture());
         undo.setEnabled(model.hasHistory());
+        repaint();
     }
     
     
@@ -220,18 +221,15 @@ public class GameView extends JFrame {
       d.add(ortho);
       d.add(diagonal);
       
-      //Point p = getLocation();
-      //Point mid = new Point((int)p.getX(),(int)p.getY()+100);
-      //d.setLocationRelativeTo(mid);
       d.setLocationRelativeTo(undo);
       d.setSize(150,200);
       d.setVisible(true);
       
       int n = 0;
       if (model.isDiagonal() != diagonal.isSelected()) 
-          n += 2;
+          n |= 2;
       if(model.isTorus() != torus.isSelected())
-          n += 1;
+          n |= 1;
       return n;
     }
     

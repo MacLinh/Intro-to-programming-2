@@ -137,8 +137,11 @@ public class GameController implements ActionListener {
         
         if(model.isFinished()) {
             model.clearHistory();
-            if(view.displayWin(model.getNumberOfSteps()))
-               saveAndExit(); 
+            if(view.displayWin(model.getNumberOfSteps())) {
+               File old = new File("savedGame.ser");
+               old.delete();
+               System.exit(0); 
+            }
             else
                 newGame();
         }
@@ -158,7 +161,6 @@ public class GameController implements ActionListener {
     
     /**
      * redoes a move
-     * precondition: previousMoves must not be empty
      */
     private void redo(){
         saveModel();
@@ -184,7 +186,7 @@ public class GameController implements ActionListener {
             out.close();
             fileOut.close();
         }catch(IOException e) {
-            e.printStackTrace();
+            System.out.println("Cannot save game");
         }
       
         System.exit(0);

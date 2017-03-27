@@ -77,7 +77,7 @@ public class GameModel implements Serializable, Cloneable{
     /**
      * DW about it. the answer to every question in the universe
      */
-    public static final long serialVersionUID = 42L;
+    public static final long serialVersionUID = 42l;
     
     /*
      * initializes static fields
@@ -352,7 +352,9 @@ public class GameModel implements Serializable, Cloneable{
             isDiagonal = !isDiagonal;
     }
     /**
-     * returns a copy of this model
+     * I only deep copied fields that need to be deep copied
+     * 
+     * @return a copy of this model
      */
     @Override
     public Object clone(){
@@ -360,18 +362,18 @@ public class GameModel implements Serializable, Cloneable{
         try{
             copy = super.clone();
         }catch(CloneNotSupportedException e){ // this shouldnt happen
-            System.out.println("error");
+            throw new RuntimeException("error cloning you messed up");
         }
         
-        //the only reference type here is the DotInfo array so I will only deep copy that
-        //or more accurately modify <this> object so that it doesnt share references
-        DotInfo[] newArray = new DotInfo[dots.length];
+        
+        DotInfo[] newArray = new DotInfo[dots.length]; // deep copies the DotInfo array
         for (int i = 0; i < dots.length; i++){
-            newArray[i] = (DotInfo)dots[i].clone();
+            newArray[i] = (DotInfo) dots[i].clone();
         }
-        dots = newArray;
+        GameModel i = (GameModel) copy;
+        i.dots = newArray; // gives the copy the copied array
         
-        return copy;
+        return i;
     }
     /**
      * Builds a String representation of the model
