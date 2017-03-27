@@ -213,7 +213,8 @@ public class GameView extends JFrame {
       dGroup.add(ortho);
       dGroup.add(diagonal);
       
-      d.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));
+      //d.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));
+      d.setLayout(new GridLayout(6,1));
       d.add(tLabel);
       d.add(plane);
       d.add(torus);

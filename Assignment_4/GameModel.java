@@ -102,7 +102,6 @@ public class GameModel implements Serializable, Cloneable{
         reset();
     }
     
-    
     /**
      * Resets the model to (re)start a game. The previous game (if there is one)
      * is cleared up . 
@@ -303,6 +302,11 @@ public class GameModel implements Serializable, Cloneable{
         future = new LinkedStack<GameModel>();
     }
     
+    private int euclidMod(int a){
+        if (a < 0)
+            return (a%size + size)%size;
+        return  a%size;
+    }
     /**
      * returns all neighboring dots at coordinates. I got dizzy so just used a bunch of if statements 
      * 
@@ -314,25 +318,29 @@ public class GameModel implements Serializable, Cloneable{
     public LinkedStack<DotInfo> getNeighbors(int x, int y){
         LinkedStack<DotInfo> t = new LinkedStack<DotInfo>();
         if(x > 0) t.push(get(x-1,y));
-        else if (isTorus) t.push(get(size-1,y));
+        else if (isTorus) t.push(get(euclidMod(x-1),y));
         
         if(x<size-1)  t.push(get(x+1,y));
-        else if (isTorus) t.push(get(0,y));
+        else if (isTorus) t.push(get(euclidMod(x+1),y));
         
         if(y > 0) t.push(get(x,y-1));
-        else if (isTorus) t.push(get(x,size-1));
+        else if (isTorus) t.push(get(x,euclidMod(y-1)));
         
         if(y<size-1)  t.push(get(x,y+1));
-        else if (isTorus) t.push(get(x,0));
+        else if (isTorus) t.push(get(x,euclidMod(y+1)));
         
         if(isDiagonal) {
             if(x > 0 && y > 0) t.push(get(x-1,y-1));
-            //else if (isTorus) t.push(get(size-1,y-1));
+            else if (isTorus) t.push(get(euclidMod(x-1),euclidMod(y-1)));
+            
             if(x > 0 && y < size-1) t.push(get(x-1,y+1));
+            else if (isTorus) t.push(get(euclidMod(x-1),euclidMod(y+1)));
             
             if(x < size-1 && y > 0) t.push(get(x+1,y-1));
+            else if (isTorus) t.push(get(euclidMod(x+1),euclidMod(y-1)));
             
             if(x < size-1 && y < size-1) t.push(get(x+1,y+1));
+            else if (isTorus) t.push(get(euclidMod(x+1),euclidMod(y+1)));
         }
         return t;
     }

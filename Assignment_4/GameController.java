@@ -47,6 +47,8 @@ public class GameController implements ActionListener {
             view = new GameView(model,this);
             newGame();
         }
+        if (model.getSize() != size) // in case the user puts in a new size then what the saved game was
+            model = new GameModel(size);
         if (view == null)
             view = new GameView(model,this);
         view.update(model);

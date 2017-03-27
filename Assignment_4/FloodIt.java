@@ -45,6 +45,4 @@ public class FloodIt {
         //starts the game
         new GameController(size);
     }
-    
-    
 }
