@@ -1,7 +1,8 @@
 // Authors: Aleeza Ladhani, Mac Linh Pham
 // Student numbers: 8195730, 8703691
 // Course: ITI 1121-C
-// Assignment: 2
+// Assignment: 4
+
 import javax.swing.*;
 /**
  * The class <b>FloodIt</b> launches the game
@@ -13,13 +14,15 @@ public class FloodIt {
     
     /**
      * <b>main</b> of the application. Creates the instance of  GameController 
-     * and starts the game. If a game size (<12) is passed as parameter, it is 
+     * and starts the game. If a game size less than 12 is passed as parameter, it is 
      * used as the board size. Otherwise, a default value is passed
      * 
      * @param args
      *            command line parameters
      */
     public static void main(String[] args) {
+        StudentInfo.display();
+        
         try {
             UIManager.setLookAndFeel(
                                     UIManager.getSystemLookAndFeelClassName());
@@ -28,7 +31,6 @@ public class FloodIt {
             System.out.println("error loading look and feel, default used");
         }
         
-        //StudentInfo.display();
         int size = 12;
         if (args.length == 1){
             try{

@@ -1,7 +1,7 @@
 // Authors: Aleeza Ladhani, Mac Linh Pham
 // Student numbers: 8195730, 8703691
 // Course: ITI 1121-C
-// Assignment: 2
+// Assignment: 4
 
 /**
  * Stack Abstract Data Type. A Stack is a linear data structure

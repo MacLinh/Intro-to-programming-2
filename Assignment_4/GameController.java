@@ -1,7 +1,7 @@
 // Authors: Aleeza Ladhani, Mac Linh Pham
 // Student numbers: 8195730, 8703691
 // Course: ITI 1121-C
-// Assignment: 2
+// Assignment: 4
 
 import java.awt.event.*;
 import java.io.*;
@@ -179,7 +179,7 @@ public class GameController implements ActionListener {
     }
     
     private void saveAndExit(){
-        System.out.println("exiting");
+        //System.out.println("exiting");
         try {
             FileOutputStream fileOut =
                 new FileOutputStream("savedGame.ser");

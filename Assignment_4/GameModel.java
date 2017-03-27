@@ -1,7 +1,7 @@
 // Authors: Aleeza Ladhani, Mac Linh Pham
 // Student numbers: 8195730, 8703691
 // Course: ITI 1121-C
-// Assignment: 2
+// Assignment: 4
 
 import java.util.Random;
 import java.io.*;
@@ -141,6 +141,8 @@ public class GameModel implements Serializable, Cloneable{
      * returns the current color of a given dot in the game
      * 
      * @param x the index of the dot
+     *
+     * @return the color of the dot at index x
      */
     public int getColor(int x){
         return dots[x].getColor(); // for purpose of updating grid - we don't care about coordinates

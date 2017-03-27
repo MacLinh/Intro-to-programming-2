@@ -1,7 +1,7 @@
 // Authors: Aleeza Ladhani, Mac Linh Pham
 // Student numbers: 8195730, 8703691
 // Course: ITI 1121-C
-// Assignment: 2
+// Assignment: 4
 
 import java.awt.*;
 import javax.swing.*;
@@ -106,19 +106,19 @@ public class GameView extends JFrame {
         quit.setActionCommand("7");
         quit.addActionListener(controller);
         
-        undo = new JButton("undo");
+        undo = new JButton("Undo");
         undo.setPreferredSize(new Dimension(69,34));
         undo.setActionCommand("8");
         undo.setEnabled(false);
         undo.addActionListener(controller);
         
-        redo = new JButton("redo");
+        redo = new JButton("Redo");
         redo.setPreferredSize(new Dimension(69,34));
         redo.setActionCommand("9");
         redo.setEnabled(false);
         redo.addActionListener(controller);
         
-        options = new JButton("options");
+        options = new JButton("Options");
         options.setPreferredSize(new Dimension(69,34));
         options.setActionCommand("10");
         options.addActionListener(controller);
@@ -192,7 +192,7 @@ public class GameView extends JFrame {
     /**
      * creates a popup to enable options
      * 
-     * @ return returns 1 if torus is changed, 2 if diagonal and 3 if both, and 0 if unchanged
+     * @return returns 1 if torus is changed, 2 if diagonal and 3 if both, and 0 if unchanged
      */
     public int displayOptions(GameModel model){
       JDialog d = new JDialog(this,"Options",true);
@@ -243,8 +243,8 @@ public class GameView extends JFrame {
             Thread.sleep(100);
         }catch(InterruptedException e){
         }
-        Object[] options = {"play again",
-            "exit"};
+        Object[] options = {"Play again",
+            "Exit"};
         int n = JOptionPane.showOptionDialog(this,
                                              "You won in "+steps+" steps!\nWould you like to go again?",
                                              "You Win!",

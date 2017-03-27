@@ -1,7 +1,7 @@
 // Authors: Aleeza Ladhani, Mac Linh Pham
 // Student numbers: 8195730, 8703691
 // Course: ITI 1121-C
-// Assignment: 2
+// Assignment: 4
 
 /**
  * The class <b>DotInfo</b> is a simple helper class to store the initial color and state
@@ -99,7 +99,9 @@ public class DotInfo implements Cloneable, Serializable{
     }
     
     /**
-     * sets the color\
+     * sets the color
+     * @param color
+     *      the color to set as
      */
     public void setColor(int color) {
         this.color = color;

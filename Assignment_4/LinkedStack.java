@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 4
+
 public class LinkedStack<E> implements java.io.Serializable {
   /**
    * DW about it. the answer to every question in the universe

@@ -1,7 +1,7 @@
 // Authors: Aleeza Ladhani, Mac Linh Pham
 // Student numbers: 8195730, 8703691
 // Course: ITI 1121-C
-// Assignment: 2
+// Assignment: 4
 
 import java.awt.*;
 import javax.swing.*;
@@ -14,12 +14,12 @@ import javax.swing.*;
  * ``medium'' and ``small'', respectively in directory ``N'', ``M'' and ``S''.
  *
  * The images are 
- * ball-0.png => grey icon
- * ball-1.png => orange icon
- * ball-2.png => blue icon
- * ball-3.png => green icon
- * ball-4.png => purple icon
- * ball-5.png => red icon
+ * ball-0.png = grey icon
+ * ball-1.png = orange icon
+ * ball-2.png = blue icon
+ * ball-3.png = green icon
+ * ball-4.png = purple icon
+ * ball-5.png = red icon
  *
  *  <a href=
  * "http://developer.apple.com/library/safari/#samplecode/Puzzler/Introduction/Intro.html%23//apple_ref/doc/uid/DTS10004409"
