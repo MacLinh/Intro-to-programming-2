@@ -212,13 +212,24 @@ public class GameModel implements Serializable, Cloneable{
         return selectedColor;
     }
     
+    /**
+     * getter for torus mode
+     * 
+     * @return returns true if the game mode is torus
+     */
     public boolean isTorus(){
         return isTorus;
     }
     
+    /**
+     * getter for diagonal mode
+     * 
+     * @return returns true if the game mode is diagonal
+     */
     public boolean isDiagonal(){
         return isDiagonal;
     }
+    
     /**
      * Getter method for the model's dotInfo reference
      * at location (i,j)
@@ -277,36 +288,53 @@ public class GameModel implements Serializable, Cloneable{
             return DotButton.MEDIUM_SIZE;
         return DotButton.SMALL_SIZE;
     }
+    
     /**
-     * returns the stack of history
+     * returns the stack of history for undoable moves
+     * 
+     * @return a stack of past moves
      */
     public LinkedStack<GameModel> getHistory(){
         return history;
     }
     
+    /**
+     * getter for the stack of redoable moves
+     * 
+     * @return a stack of future moves
+     */
     public LinkedStack<GameModel> getFuture(){
       return future;
     }
+    
+    /**
+     * @return whether it is possible to redo a move
+     */
     public boolean hasHistory(){
         return !history.isEmpty();
     }
+    
+    /**
+     * @return whether it is possible to redo a move
+     */
     public boolean hasFuture(){
         return !future.isEmpty();
     }
     
+    /**
+     * resets the previous moves
+     */
     public void clearHistory(){
         history = new LinkedStack<GameModel>();
     }
     
+    /**
+     * resets all the redoable moves
+     */
     public void clearFuture(){
         future = new LinkedStack<GameModel>();
     }
     
-    private int euclidMod(int a){
-        if (a < 0)
-            return (a%size + size)%size;
-        return  a%size;
-    }
     /**
      * returns all neighboring dots at coordinates. I got dizzy so just used a bunch of if statements 
      * 
@@ -349,6 +377,15 @@ public class GameModel implements Serializable, Cloneable{
     }
     
     /**
+     * @return the floorModulo of a and size to provide the torus values
+     */
+    private int euclidMod(int a){
+        if (a < 0)
+            return (a%size + size)%size;
+        return  a%size;
+    }
+    
+    /**
      * sets the options 
      * 
      * @param n a value of 1 will modify torus and 2 will modify diagonal. valid arguments: 1,2, and 3
@@ -361,8 +398,9 @@ public class GameModel implements Serializable, Cloneable{
     }
     /**
      * I only deep copied fields that need to be deep copied
+     * the stacks are not cloned because they should have been static, I just wanted them to be serialized
      * 
-     * @return a copy of this model
+     * @return returns a copy of this model with "important fields" deep copied
      */
     @Override
     public Object clone(){
@@ -383,6 +421,7 @@ public class GameModel implements Serializable, Cloneable{
         
         return i;
     }
+    
     /**
      * Builds a String representation of the model
      *
