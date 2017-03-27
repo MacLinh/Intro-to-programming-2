@@ -144,7 +144,7 @@ public class GameView extends JFrame {
         //holds the grid of dots
         grid = new JPanel(new GridLayout(model.getSize(),model.getSize()));
         grid.setPreferredSize(new Dimension(width,height));
-        grid.setBackground(Color.black);
+        //grid.setBackground(Color.black);
         for (int i = 0; i < dots.length; i++){
             dots[i] = new DotButton(model.getColor(i),iconSize);
             dots[i].addActionListener(controller);
