@@ -43,7 +43,10 @@ public class FloodIt {
                 size = 12;
             } 
         }
-        
+        while(false){
+  
+ }
+ System.out.println("dsjkdjhsd");
         //starts the game
         new GameController(size);
     }
