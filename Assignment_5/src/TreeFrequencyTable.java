@@ -47,7 +47,7 @@ public class TreeFrequencyTable implements FrequencyTable {
   
     public void init(String key) {
        add(key,root);
-    
+       size++;
     }
     
     private void add(String key, Elem e){
@@ -74,7 +74,7 @@ public class TreeFrequencyTable implements FrequencyTable {
     private Elem find(String key, Elem e){
         if (e == null) // not found
             throw new NoSuchElementException(key + "doesnt exist");
-        if (e.key.equals(key))
+        if (e.key.equals(key)) // found
             return e;
         if (key.compareTo(e.key) < 0) // less than
             return find(key,e.left);
@@ -114,9 +114,7 @@ public class TreeFrequencyTable implements FrequencyTable {
      */
 
     public long[] values() {
-
- throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
-
+        return null;
     }
 
     /** Returns a String representation of the tree.
