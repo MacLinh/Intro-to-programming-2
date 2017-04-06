@@ -58,8 +58,16 @@ public class LinearFrequencyTable implements FrequencyTable {
       */
     
     public long get(String key) {
-        return 100000000l;
-        //throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
+        
+        Elem e = head.next;
+        while(e != head){
+            if (e.key.equals(key)){
+                //System.out.println("going" + key);
+                return e.count;
+            }
+            e = e.next;
+        }
+        throw new NoSuchElementException(key +" does not exist ");
         
         
     }
@@ -73,11 +81,15 @@ public class LinearFrequencyTable implements FrequencyTable {
       */
     
     public void init(String key) {
-        
+       /* 
         Elem after = head.next;
         
         head.next = new Elem(key, head, after);
         after.previous = head.next;
+        size++;*/
+        Elem node = new Elem(key,head.previous,head);
+        head.previous.next = node;
+        head.previous = node;
         size++;
         
     }
@@ -89,13 +101,19 @@ public class LinearFrequencyTable implements FrequencyTable {
       */
     
     public void update(String key) {
-        
+        //System.out.println(this);
         //throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
-        Elem current = head;
-        do{
-            current.count = get(current.key);
-            current = current.next;//progress
-        }while(current.next != head);
+        Elem e = head.next;
+        while(e != head){
+            if (e.key.equals(key)){
+                //System.out.println("going" + key);
+                e.count++;
+                return;
+            }
+            e = e.next;
+        }
+        throw new NoSuchElementException(key +" does not exist ");
+        //System.out.print(key +" : " + e.key+", ");
     }
     
     /** Returns the list of keys in order, according to the method
@@ -107,12 +125,13 @@ public class LinearFrequencyTable implements FrequencyTable {
     public LinkedList<String> keys() {
         
         //throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
-        Elem current = head;
+        Elem current = head.next;
         LinkedList<String> keys = new LinkedList<String>();
-        do{
+        while(current.next != head){
             keys.addLast(current.key);
+            if(current.key.compareTo(current.next.key) != -1) throw new RuntimeException("u messed up its not sorted");
             current = current.next;//progress
-        }while(current.next != head);
+        }
         //java.util.Collections.sort(keys);
         return keys;
     }
@@ -126,13 +145,12 @@ public class LinearFrequencyTable implements FrequencyTable {
     
     public long[] values() {
         long[] values = new long[size]; 
-        Elem current = head;
+        Elem current = head.next;
         for(int i = 0; i < size; i++){ //sort this later
             values[i] = current.count;
             current = current.next;
         }
         
-        java.util.Arrays.sort(values);
         return values;
     }
     

@@ -46,9 +46,21 @@ public class TreeFrequencyTable implements FrequencyTable {
      */
   
     public void init(String key) {
+       add(key,root);
     
-	throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
+    }
     
+    private void add(String key, Elem e){
+        if(e == null) {
+            e = new Elem(key);
+        }
+        else {
+            if (key.equals(e.key)) throw new IllegalArgumentException(key + " already exists");
+            if (key.compareTo(e.key) < 0) // less than
+                add(key,e.left);
+            else 
+                add(key,e.right);  
+        }
     }
   
     /** The method updates the frequency associed with the key by one.
@@ -57,9 +69,18 @@ public class TreeFrequencyTable implements FrequencyTable {
      */
   
     public void update(String key) {
-    
-	throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
-
+       find(key,root).count++;
+    }
+    private Elem find(String key, Elem e){
+        if (e == null) // not found
+            throw new NoSuchElementException(key + "doesnt exist");
+        if (e.key.equals(key))
+            return e;
+        if (key.compareTo(e.key) < 0) // less than
+            return find(key,e.left);
+        else 
+            return find(key,e.right); 
+        
     }
   
     /**
@@ -71,9 +92,7 @@ public class TreeFrequencyTable implements FrequencyTable {
      */
   
     public long get(String key) {
-    
-	throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
-
+      return find(key,root).count;
     }
   
     /** Returns the list of keys in order, according to the method compareTo of the key
@@ -84,7 +103,7 @@ public class TreeFrequencyTable implements FrequencyTable {
 
     public LinkedList<String> keys() {
 
-	throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
+ throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
 
     }
 
@@ -96,7 +115,7 @@ public class TreeFrequencyTable implements FrequencyTable {
 
     public long[] values() {
 
-	throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
+ throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
 
     }
 
