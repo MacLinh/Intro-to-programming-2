@@ -44,22 +44,45 @@ public class TreeFrequencyTable implements FrequencyTable {
      *
      * @param key key with which the specified value is to be associated
      */
-  
+   private int  threshold = 1, n = 1;
     public void init(String key) {
-       add(key,root);
-       size++;
+        System.out.println(size+ ", "+threshold);
+        if (size == threshold){ 
+            Elem oldTop = root;
+            root = new Elem(key);
+            if (oldTop.key.compareTo(key) < 0) 
+                root.left = oldTop;
+            else if (oldTop.key.compareTo(key) == 0)
+                throw new IllegalArgumentException(key + " already exists");
+            else 
+                root.right = oldTop;
+            threshold += ++n;
+            
+        } else {
+            add(key,root);
+        } 
+        size++;
+        
     }
     
     private void add(String key, Elem e){
-        if(e == null) {
-            e = new Elem(key);
+        if(root == null) {
+            root = new Elem(key); // need to fix 
         }
         else {
             if (key.equals(e.key)) throw new IllegalArgumentException(key + " already exists");
-            if (key.compareTo(e.key) < 0) // less than
-                add(key,e.left);
-            else 
-                add(key,e.right);  
+            if (key.compareTo(e.key) < 0) {// less than
+                if (e.left == null)
+                    e.left = new Elem(key);
+                else
+                    add(key,e.left);
+            }
+            else {
+                if (e.right == null)
+                    e.right = new Elem(key);
+                else
+                    add(key,e.right);
+            }
         }
     }
   
@@ -129,12 +152,21 @@ public class TreeFrequencyTable implements FrequencyTable {
     // Helper method.
   
     private String toString(Elem current) {
-    
+        String s = "";
         if (current == null) {
             return "{}";
         }
+        if (current == root)
+            s += "root";
+        return "{" + toString(current.left) + "[" + current.key +s+ /*"," + current.count + */"]" + toString(current.right) + "}";
+    }
     
-        return "{" + toString(current.left) + "[" + current.key + "," + current.count + "]" + toString(current.right) + "}";
+    public static void main(String [] args){
+        TreeFrequencyTable tree = new TreeFrequencyTable();
+        for (int i = 0; i < 6; i++){
+            tree.init(""+i);
+        }
+        System.out.println(tree);
     }
   
 }
