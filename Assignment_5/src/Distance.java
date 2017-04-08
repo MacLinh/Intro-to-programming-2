@@ -25,7 +25,7 @@ public class Distance {
         
         boolean done = false;
         
-        while (! done) { //first k permutations of {A,C,G,T}
+        while (! done) { 
             
             String key = keys.get(0);
             

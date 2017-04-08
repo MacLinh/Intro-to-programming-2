@@ -212,7 +212,7 @@ public class TreeFrequencyTable implements FrequencyTable {
             tree.init(""+i);
         }
         //tree.spawnTree();
-        System.out.println("C".compareTo("A"));
+        System.out.println("A".compareTo("C"));
         //System.out.print(tree.get(""+10)+",");
         for (int i = 1; i < n; i++){
         tree.get(""+i);

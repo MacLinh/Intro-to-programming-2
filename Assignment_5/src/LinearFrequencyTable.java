@@ -86,11 +86,43 @@ public class LinearFrequencyTable implements FrequencyTable {
         
         head.next = new Elem(key, head, after);
         after.previous = head.next;
-        size++; */
+        size++; 
+        Elem node = new Elem(key,head.previous,head);
+        head.previous.next = node;
+        head.previous = node;
+        size++;*/
+        //System.out.print(key +" ");
+        Elem e = head.next;
+        while(e != head){
+            if(key.equals(e.key))
+                throw new IllegalArgumentException();
+            if (key.compareTo(e.key) > 0){
+                Elem n = new Elem(key,e,e.next);
+                e.next = n;
+                size++;
+                return;
+            } else
+              e = e.next;
+        }
         Elem node = new Elem(key,head.previous,head);
         head.previous.next = node;
         head.previous = node;
         size++;
+        
+    }
+    private void add(Elem e, String key) {
+        if(e == null){
+            e = new Elem(key,head,head);
+            head.next = e;
+            head.previous = e;
+            size++;
+        }
+        else if(key.compareTo(e.key) > 0) {
+            Elem n = new Elem(key,e,e.next);
+            e.next = n;
+            size++;
+        }
+        else add(e.next,key);
         
     }
     
@@ -148,7 +180,7 @@ public class LinearFrequencyTable implements FrequencyTable {
         Elem current = head.next;
         for(int i = 0; i < size; i++){ //sort this later
             values[i] = current.count;
-            if(current.key.compareTo(current.next.key) >= 0) throw new RuntimeException("u messed up its not sorted" +current.key+" " +current.next.key);
+            //if(current.key.compareTo(current.next.key) >= 0) throw new RuntimeException("u messed up its not sorted" +current.key+" " +current.next.key);
             current = current.next;
             
         }
