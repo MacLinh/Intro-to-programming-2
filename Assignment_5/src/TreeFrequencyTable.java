@@ -1,4 +1,5 @@
-import java.util.NoSuchElementException;
+//import java.util.NoSuchElementException;
+import java.util.*;
 
 /** Implements the interface <code>FrequencyTable</code> using a
  *  binary search tree.
@@ -11,7 +12,7 @@ public class TreeFrequencyTable implements FrequencyTable {
     // Stores the elements of this binary search tree (frequency
     // table)
     
-    private static class Elem {
+    private static class Elem implements Comparable{
     
         private String key;
         private long count;
@@ -24,6 +25,12 @@ public class TreeFrequencyTable implements FrequencyTable {
             this.count = 0;
             left = null;
             right = null;
+        }
+        public int compareTo(Object o){
+            if(!(o instanceof Elem))
+                   return -1;
+            Elem e = (Elem) o;
+            return key.compareTo(e.key);
         }
     }
 
@@ -44,9 +51,10 @@ public class TreeFrequencyTable implements FrequencyTable {
      *
      * @param key key with which the specified value is to be associated
      */
-   private int  threshold = 1, n = 1;
+   //private int  threshold = 1, n = 1;
+    private ArrayList<Elem> nodes = new ArrayList<Elem>(4*4*4*4*4); // cus 4^5 tuples
     public void init(String key) {
-        System.out.println(size+ ", "+threshold);
+        /*System.out.println(size+ ", "+threshold);
         if (size == threshold){ 
             Elem oldTop = root;
             root = new Elem(key);
@@ -61,10 +69,18 @@ public class TreeFrequencyTable implements FrequencyTable {
         } else {
             add(key,root);
         } 
+        size++;*/
+        if (root == null) {
+            nodes.add(new Elem(key));
+        }
+        else
+            add(key,root);
         size++;
-        
     }
     
+    /**
+     * helper method to add a new element to the tree recursively
+     */
     private void add(String key, Elem e){
         if(root == null) {
             root = new Elem(key); // need to fix 
@@ -92,9 +108,17 @@ public class TreeFrequencyTable implements FrequencyTable {
      */
   
     public void update(String key) {
+        if(root == null) {// tree not yet created
+            spawnTree();
+            //find(key,root);
+        }
        find(key,root).count++;
     }
+    /**
+     * @return a reference to the node with the specified key
+     */
     private Elem find(String key, Elem e){
+        
         if (e == null) // not found
             throw new NoSuchElementException(key + "doesnt exist");
         if (e.key.equals(key)) // found
@@ -104,6 +128,23 @@ public class TreeFrequencyTable implements FrequencyTable {
         else 
             return find(key,e.right); 
         
+    }
+    public void spawnTree() {
+         System.out.println(nodes.size());
+        if (root == null)
+        root = spawnTree(root,nodes);
+    }
+    private Elem spawnTree(Elem e, List<Elem> arr){
+        Collections.sort(arr);
+        int middle = (int)arr.size()/2;
+        if(arr.size() == 0) // if its of size 1 then the branch is done
+            return null;
+        e = arr.get(middle); //gets the middle of the array
+        
+        e.left = spawnTree(e,arr.subList(0,middle));
+        e.right = spawnTree(e,arr.subList(middle+1,arr.size()));
+        
+        return e;                   
     }
   
     /**
@@ -123,11 +164,13 @@ public class TreeFrequencyTable implements FrequencyTable {
      *
      *  @return the list of keys in order
      */
-
+    private LinkedList<String> keys = new LinkedList<String>();
     public LinkedList<String> keys() {
-
- throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
-
+       LinkedList<String> keys = new LinkedList<String>(); 
+        for (Elem e : nodes) {
+            keys.addLast(e.key);
+        }
+        return keys;
     }
 
     /** Returns the values in the order specified by the method compareTo of the key
@@ -137,7 +180,11 @@ public class TreeFrequencyTable implements FrequencyTable {
      */
 
     public long[] values() {
-        return null;
+        long[] values = new long[size];
+        for(int i = 0; i < size; i++){
+            values[i] = nodes.get(i).count;
+        }
+        return values;
     }
 
     /** Returns a String representation of the tree.
@@ -146,6 +193,8 @@ public class TreeFrequencyTable implements FrequencyTable {
      */
 
     public String toString() {
+        if (root == null)
+            root = spawnTree(root,nodes);
         return toString( root );
     }
 
@@ -163,10 +212,16 @@ public class TreeFrequencyTable implements FrequencyTable {
     
     public static void main(String [] args){
         TreeFrequencyTable tree = new TreeFrequencyTable();
-        for (int i = 0; i < 6; i++){
+        int n= 300000;
+        for (int i = 1; i <= n; i++){
             tree.init(""+i);
         }
-        System.out.println(tree);
+        //tree.spawnTree();
+        System.out.println("11".compareTo("10"));
+        //System.out.print(tree.get(""+10)+",");
+        for (int i = 1; i < n; i++){
+        tree.get(""+i);
+        }
     }
   
 }

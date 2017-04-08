@@ -81,12 +81,12 @@ public class LinearFrequencyTable implements FrequencyTable {
       */
     
     public void init(String key) {
-       /* 
+       /*
         Elem after = head.next;
         
         head.next = new Elem(key, head, after);
         after.previous = head.next;
-        size++;*/
+        size++; */
         Elem node = new Elem(key,head.previous,head);
         head.previous.next = node;
         head.previous = node;
