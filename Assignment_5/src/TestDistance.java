@@ -39,7 +39,7 @@ public class TestDistance {
         
         long start = System.nanoTime(), stop;
         
-        //System.out.println(Distance.compare(5, e, f));
+        System.out.println(Distance.compare(5, e, f));
         
         stop = System.nanoTime();
         

@@ -37,6 +37,12 @@ public class TreeFrequencyTable implements FrequencyTable {
     private Elem root = null; // A reference to the root element
     private int size = 0; // The size of the tree
 
+    /**
+     * I will use an arraylist to store the values to generate a well balanced tree afterwards
+     * Array, not linked because I will acess indexes often but not modify it, set inital size to 4^5 cus default test
+     */
+    private ArrayList<Elem> nodes = new ArrayList<Elem>(4*4*4*4*4); // cus 4^5 tuples
+    
     /** The size of the frequency table.
      *
      * @return the size of the frequency table
@@ -51,25 +57,8 @@ public class TreeFrequencyTable implements FrequencyTable {
      *
      * @param key key with which the specified value is to be associated
      */
-   //private int  threshold = 1, n = 1;
-    private ArrayList<Elem> nodes = new ArrayList<Elem>(4*4*4*4*4); // cus 4^5 tuples
+    
     public void init(String key) {
-        /*System.out.println(size+ ", "+threshold);
-        if (size == threshold){ 
-            Elem oldTop = root;
-            root = new Elem(key);
-            if (oldTop.key.compareTo(key) < 0) 
-                root.left = oldTop;
-            else if (oldTop.key.compareTo(key) == 0)
-                throw new IllegalArgumentException(key + " already exists");
-            else 
-                root.right = oldTop;
-            threshold += ++n;
-            
-        } else {
-            add(key,root);
-        } 
-        size++;*/
         if (root == null) {
             nodes.add(new Elem(key));
         }

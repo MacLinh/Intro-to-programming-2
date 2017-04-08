@@ -148,7 +148,9 @@ public class LinearFrequencyTable implements FrequencyTable {
         Elem current = head.next;
         for(int i = 0; i < size; i++){ //sort this later
             values[i] = current.count;
+            if(current.key.compareTo(current.next.key) >= 0) throw new RuntimeException("u messed up its not sorted" +current.key+" " +current.next.key);
             current = current.next;
+            
         }
         
         return values;
