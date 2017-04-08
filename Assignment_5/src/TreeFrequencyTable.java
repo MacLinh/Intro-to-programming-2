@@ -131,11 +131,13 @@ public class TreeFrequencyTable implements FrequencyTable {
     }
     public void spawnTree() {
          System.out.println(nodes.size());
-        if (root == null)
-        root = spawnTree(root,nodes);
+         if (root == null) {
+             Collections.sort(nodes);
+             root = spawnTree(root,nodes);
+         }
     }
     private Elem spawnTree(Elem e, List<Elem> arr){
-        Collections.sort(arr);
+        //Collections.sort(arr);
         int middle = (int)arr.size()/2;
         if(arr.size() == 0) // if its of size 1 then the branch is done
             return null;
@@ -156,6 +158,10 @@ public class TreeFrequencyTable implements FrequencyTable {
      */
   
     public long get(String key) {
+        if (root == null) {
+             Collections.sort(nodes);
+             root = spawnTree(root,nodes);
+         }
       return find(key,root).count;
     }
   
@@ -194,7 +200,7 @@ public class TreeFrequencyTable implements FrequencyTable {
 
     public String toString() {
         if (root == null)
-            root = spawnTree(root,nodes);
+            spawnTree();
         return toString( root );
     }
 
@@ -217,7 +223,7 @@ public class TreeFrequencyTable implements FrequencyTable {
             tree.init(""+i);
         }
         //tree.spawnTree();
-        System.out.println("11".compareTo("10"));
+        System.out.println("C".compareTo("A"));
         //System.out.print(tree.get(""+10)+",");
         for (int i = 1; i < n; i++){
         tree.get(""+i);
