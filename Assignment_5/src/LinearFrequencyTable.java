@@ -81,48 +81,25 @@ public class LinearFrequencyTable implements FrequencyTable {
       */
     
     public void init(String key) {
-       /*
-        Elem after = head.next;
-        
-        head.next = new Elem(key, head, after);
-        after.previous = head.next;
-        size++; 
-        Elem node = new Elem(key,head.previous,head);
-        head.previous.next = node;
-        head.previous = node;
-        size++;*/
-        //System.out.print(key +" ");
-        Elem e = head.next;
-        while(e != head){
-            if(key.equals(e.key))
-                throw new IllegalArgumentException();
-            if (key.compareTo(e.key) > 0){
-                Elem n = new Elem(key,e,e.next);
-                e.next = n;
-                size++;
-                return;
-            } else
-              e = e.next;
-        }
-        Elem node = new Elem(key,head.previous,head);
-        head.previous.next = node;
-        head.previous = node;
         size++;
+        add(head.previous,key);
+    }
+    private void add(Elem e, String key){
+        if (e == head || e.key.compareTo(key) < 0) {
+            addAfter(e,key); 
+            return;
+        }
+        add(e.previous,key);
+        
         
     }
-    private void add(Elem e, String key) {
-        if(e == null){
-            e = new Elem(key,head,head);
-            head.next = e;
-            head.previous = e;
-            size++;
-        }
-        else if(key.compareTo(e.key) > 0) {
-            Elem n = new Elem(key,e,e.next);
-            e.next = n;
-            size++;
-        }
-        else add(e.next,key);
+    private void addAfter(Elem before, String key) {
+        Elem after = before.next;
+        
+        before.next = new Elem(key, before, after);
+        after.previous = before.next;
+        
+        //size++;
         
     }
     

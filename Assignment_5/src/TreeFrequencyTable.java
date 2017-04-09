@@ -65,11 +65,13 @@ public class TreeFrequencyTable implements FrequencyTable {
         else
             add(key,root);
         size++;
+        
     }
     
     /**
      * helper method to add a new element to the tree recursively
      */
+    
     private void add(String key, Elem e){
         if(root == null) {
             root = new Elem(key); // need to fix 
