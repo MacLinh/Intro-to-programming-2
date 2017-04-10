@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 5
+
 /**
  * The interface <strong>FrequencyTable</strong>. A frequency table
  * associates counts to keys. To be more precise, the interface should

@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 5
+
 //import java.util.NoSuchElementException;
 import java.util.*;
 
@@ -121,7 +126,7 @@ public class TreeFrequencyTable implements FrequencyTable {
         
     }
     public void spawnTree() {
-         System.out.println(nodes.size());
+         //System.out.println(nodes.size());
          if (root == null) {
              Collections.sort(nodes);
              root = spawnTree(root,nodes);

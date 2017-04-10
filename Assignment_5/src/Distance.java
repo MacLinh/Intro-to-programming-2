@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 5
+
 /**
  * Implements the k-tuple distance of Yang et al.: Yang et al. (2008)
  * Performance comparison between k-tuple distance and four

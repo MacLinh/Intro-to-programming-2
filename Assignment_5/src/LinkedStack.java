@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 5
+
 /** Implements the interface <code>Stack</code> using linked elements.
   *
   *
@@ -80,12 +85,19 @@ public class LinkedStack<E> implements Stack<E> {
       */
     
     public void roll() {
-        roll(top);
+        if (isEmpty()) return;
+        roll(null, top);
     }
-    private void roll(Elem<E> p){
-        if(p.next == null)
-            p.next = new Elem<E>(pop(),null);
-        roll(p.next);
+    private void roll(Elem<E> previous, Elem<E> p){
+        if(p.next == null) {
+            p.next = top;
+            Elem<E> temp = top.next;
+            top.next = null;
+            top = temp;
+
+            return;
+        }
+        roll(p, p.next);
     }
 
     /** Removes the botttom element. The element is inserted on the
@@ -94,15 +106,18 @@ public class LinkedStack<E> implements Stack<E> {
 
     public void unroll() {
         if(isEmpty()) return;
-        unroll(top);
+        unroll(null, top);
     }
-    private void unroll(Elem<E> p){
+    private void unroll(Elem<E> previous, Elem<E> p){
         if(p.next == null) {
             push(p.value);
-            p = null;
+            
+            if (previous == null) previous = top;
+            previous.next = null;
+
             return;
         }
-        unroll(p.next);
+        unroll(p, p.next);
     }
     
     /** Returns a string representation of the stack.

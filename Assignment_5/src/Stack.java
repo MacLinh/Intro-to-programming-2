@@ -1,3 +1,8 @@
+// Authors: Aleeza Ladhani, Mac Linh Pham
+// Student numbers: 8195730, 8703691
+// Course: ITI 1121-C
+// Assignment: 5
+
 /** The abstract data type <code>Stack</code>.
  *
  * @author Marcel Turcotte (turcotte@eecs.uottawa.ca)
