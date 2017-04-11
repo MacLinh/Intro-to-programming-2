@@ -89,6 +89,8 @@ public class LinearFrequencyTable implements FrequencyTable {
     }
 
     private void add(Elem e, String key) {
+        if (key.equals(e.key))
+            throw new IllegalArgumentException();
         if (e == head || e.key.compareTo(key) < 0) {
             addAfter(e, key); 
             return;

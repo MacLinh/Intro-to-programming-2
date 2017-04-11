@@ -64,12 +64,18 @@ public class TreeFrequencyTable implements FrequencyTable {
      */
     
     public void init(String key) {
-        if (root == null) {
-            nodes.add(new Elem(key));
+        if (root == null) { //generating a tree from sorted list will provide a balanced + saturated tree and run 10% or so faster
+            Elem e = new Elem(key);
+            /*for(Elem p : nodes){ // YES I REALIZE THIS IS SLOW... BUT init the tree isnt the most time consuming part its searching
+            if(e.key.equals(p.key))
+                throw new IllegalArgumentException();
+            }*/
+            nodes.add(e);
+            
         }
         else
-            add(key,root);
-        size++;
+            add(key,root); // implemented this anyway in case an element is added to a already initialized tree
+        size++;            // mostly unused but this is to demonstrate understanding of trees (kinda cheated with array list so...)
         
     }
     
