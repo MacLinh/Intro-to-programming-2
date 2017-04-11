@@ -60,7 +60,6 @@ public class TestDistance {
         
         System.out.println("time = " + (stop-start) + " nano seconds");
         
-        
     }
     
 }

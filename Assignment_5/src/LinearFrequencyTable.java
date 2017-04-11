@@ -55,26 +55,25 @@ public class LinearFrequencyTable implements FrequencyTable {
         return size;
     }
     
-    /** Returns the frequency value associated with this key.
+    /**
+      * Returns the frequency value associated with this key.
       *
       *  @param key key whose frequency value is to be returned
       *  @return the frequency associated with this key
       *  @throws NoSuchElementException if the key is not found
       */
-    
     public long get(String key) {
-        
         Elem e = head.next;
-        while(e != head){
-            if (e.key.equals(key)){
-                //System.out.println("going" + key);
+
+        while (e != head){
+            if (e.key.equals(key)) {
                 return e.count;
             }
+
             e = e.next;
         }
-        throw new NoSuchElementException(key +" does not exist ");
-        
-        
+
+        throw new NoSuchElementException(key + " does not exist ");
     }
     
     /** Creates an entry in the frequency table and initializes its
@@ -84,28 +83,25 @@ public class LinearFrequencyTable implements FrequencyTable {
       *  @param key key with which the specified value is to be associated
       *  @throws IllegalArgumentException if the key was alreaddy present
       */
-    
     public void init(String key) {
-        size++;
-        add(head.previous,key);
+        size ++;
+        add(head.previous, key);
     }
-    private void add(Elem e, String key){
+
+    private void add(Elem e, String key) {
         if (e == head || e.key.compareTo(key) < 0) {
-            addAfter(e,key); 
+            addAfter(e, key); 
             return;
         }
-        add(e.previous,key);
-        
-        
+
+        add(e.previous, key);
     }
+
     private void addAfter(Elem before, String key) {
         Elem after = before.next;
         
         before.next = new Elem(key, before, after);
         after.previous = before.next;
-        
-        //size++;
-        
     }
     
     /** The method updates the frequency associed with the key by one.
@@ -113,21 +109,25 @@ public class LinearFrequencyTable implements FrequencyTable {
       *  @param key key with which the specified value is to be associated
       *  @throws NoSuchElementException if the key is not found
       */
-    
     public void update(String key) {
-        //System.out.println(this);
-        //throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
         Elem e = head.next;
-        while(e != head){
-            if (e.key.equals(key)){
-                //System.out.println("going" + key);
-                e.count++;
+
+        while (e != head) {
+            int compare = e.key.compareTo(key);
+
+            if (compare == 0) {
+                e.count ++;
                 return;
             }
+
+            if (compare > 0) {
+              throw new NoSuchElementException(key + " does not exist ");
+            }
+
             e = e.next;
         }
-        throw new NoSuchElementException(key +" does not exist ");
-        //System.out.print(key +" : " + e.key+", ");
+
+        throw new NoSuchElementException(key + " does not exist ");
     }
     
     /** Returns the list of keys in order, according to the method
@@ -135,18 +135,15 @@ public class LinearFrequencyTable implements FrequencyTable {
       *
       *  @return the list of keys in order
       */
-    
     public LinkedList<String> keys() {
-        
-        //throw new UnsupportedOperationException("IMPLEMENT THIS METHOD");
         Elem current = head.next;
         LinkedList<String> keys = new LinkedList<String>();
-        while(current.next != head){
+
+        while (current.next != head) {
             keys.addLast(current.key);
-            if(current.key.compareTo(current.next.key) != -1) throw new RuntimeException("u messed up its not sorted");
-            current = current.next;//progress
+            current = current.next;
         }
-        //java.util.Collections.sort(keys);
+
         return keys;
     }
     
@@ -156,15 +153,13 @@ public class LinearFrequencyTable implements FrequencyTable {
       *
       *  @return an array of frequency counts
       */
-    
     public long[] values() {
         long[] values = new long[size]; 
         Elem current = head.next;
-        for(int i = 0; i < size; i++){ //sort this later
+
+        for (int i = 0; i < size; i ++) {
             values[i] = current.count;
-            //if(current.key.compareTo(current.next.key) >= 0) throw new RuntimeException("u messed up its not sorted" +current.key+" " +current.next.key);
             current = current.next;
-            
         }
         
         return values;
